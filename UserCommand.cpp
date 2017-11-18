@@ -1,13 +1,20 @@
-#include "User_Command.h"
+#include "UserCommand.h"
 
 void UserCommand::createNewProcess(string userCommand_) {
-   int priorityLevel = 0;
    // Obtain the priority level of new process
-   priorityLevel = userCommand_.at(2);
+   int priorityLevel = stoi(userCommand_.substr(2, userCommand_.size()-1));
+
+   if (priorityLevel < 1) {
+      cout << "ERROR \n Please enter a valid priority level. \n";
+   }
+
+   cout << "// Testing: this process has priority level of \n" << priorityLevel << endl;
 }
 
 void UserCommand::releaseDisk(string userCommand_) {
+   size_t diskNumber = userCommand_.at(2);
 
+   
 }
 
 void UserCommand::requestDiskAccess(string userCommand_) {
@@ -19,6 +26,8 @@ void UserCommand::terminateTheCurrentProcess() {
 }
 
 void UserCommand::requestMemoryAccess(string userCommand_) {
+   size_t memoryAddress = userCommand_.at(2);
+
 
 }
 
@@ -34,7 +43,7 @@ void UserCommand::showDetails(string userCommand_) {
       // When command is S m
       commandSM();
    } else {
-      cout << "Sorry you entered an unknown command";
+      cout << "Sorry you entered an unknown command \n";
    }
 
    return;
@@ -44,7 +53,8 @@ void UserCommand::showDetails(string userCommand_) {
    // 1. what process is currently using the cpu
    // 2. What processed are waiting in the ready-queue
 void UserCommand::commandSR () {
-
+   CPU_.showCurrentProcess();
+   CPU_.showProcessInReadyQueue();
 }
 
 // Function to show
@@ -59,5 +69,5 @@ void UserCommand::commandSI () {
    // Shows the state of memory.
    // For each used frame display the process number that occupies it and the page number stored in it
 void UserCommand::commandSM () {
-
+   Memory_.showCurrentMemoryState();
 }

@@ -5,6 +5,16 @@
 using namespace std;
 
 class CPU {
+public:
+   CPU() {}
+   ~CPU() {}
+
+
+   void terminateTheCurrentProcess();
+
+   // Functions for command 'S'
+   void showCurrentProcess();
+   void showProcessInReadyQueue();
 
 };
 

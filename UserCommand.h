@@ -4,10 +4,16 @@
 #include <string>
 #include <iostream>
 
+#include "CPU.h"
+#include "Memory.h"
+
 using namespace std;
 
 class UserCommand {
 public:
+   UserCommand() {}
+   ~UserCommand() {}
+
    // Function to create a new process
    void createNewProcess(string userCommand_);
    // Funtion to release disk when user input command D
@@ -22,6 +28,9 @@ public:
    void showDetails(string userCommand_);
 
 private:
+   CPU CPU_;
+   Memory Memory_;
+
    void commandSR ();
    void commandSI ();
    void commandSM ();

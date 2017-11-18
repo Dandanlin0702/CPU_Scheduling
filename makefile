@@ -2,9 +2,9 @@ CC = g++
 LFLAGS = -std=c++11
 CFLAGS = -c -Wall
 
-EXECUTABLE_NAME = cpuScheduling
-SOURCES = main.cpp CPU.cpp IO_Devices.cpp Memory.cpp Start_App.cpp User_Command.cpp
+SOURCES = main.cpp CPU.cpp Devices.cpp Memory.cpp StartApp.cpp UserCommand.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
+EXECUTABLE_NAME = cpu
 
 all: $(EXECUTABLE_NAME)
 
