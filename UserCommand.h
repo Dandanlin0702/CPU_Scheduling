@@ -6,6 +6,7 @@
 
 #include "CPU.h"
 #include "Memory.h"
+#include "Devices.h"
 
 using namespace std;
 
@@ -14,8 +15,7 @@ public:
    UserCommand() {}
    ~UserCommand() {}
 
-   // Function to create a new process
-   void createNewProcess(string userCommand_);
+   void commandIsA(string userCommand_);
    // Funtion to release disk when user input command D
    void releaseDisk(string userCommand_);
    // Function to request disk access
@@ -30,10 +30,13 @@ public:
 private:
    CPU CPU_;
    Memory Memory_;
+   Devices Devices_;
 
    void commandSR ();
    void commandSI ();
    void commandSM ();
+   // Function to create a new process
+   void createNewProcess(string userCommand_, int& priorityLevel_);
 };
 
 #endif

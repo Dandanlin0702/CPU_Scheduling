@@ -12,12 +12,12 @@ void StartApp::runApp() {
 
    cout << "How much RAM memory(in bytes) is there on the simulated computer? (Range from 1-4000000000) \n> ";
    cin >> ramMemory;
-   
+
    while (ramMemory > 4000000000 || ramMemory <= 0) {
       cout << "Youe input is invalid, please enter again\n> ";
       cin >> ramMemory;
    }
-   
+
    cout << "What is the size of a page/frame? \n> ";
    cin >> pageSize;
 
@@ -50,7 +50,7 @@ void StartApp::runApp() {
          cout << "No valid command received, please re-enter \n>>";
          getline (cin, userCommand);
       }
-      
+
       if (userCommand.at(0) == 'Q' || userCommand.at(0) == 'q') {
          cout << "Program terminatting";
          exit(0);
@@ -58,7 +58,7 @@ void StartApp::runApp() {
          string menu = helpMenu();
          cout << menu << endl;
       } else if (userCommand.at(0) == 'A' && userCommand.at(1) == ' ') {
-         userCommand_.createNewProcess(userCommand);
+         userCommand_.commandIsA(userCommand);
       } else if (userCommand.at(0) == 'D' && userCommand.at(1) == ' ') {
          userCommand_.releaseDisk(userCommand);
       } else if (userCommand.at(0) == 'd' && userCommand.at(1) == ' ') {
@@ -72,7 +72,7 @@ void StartApp::runApp() {
       } else {
          cout << "Unknown user command (" << userCommand << ") invoked. \n"
               << "All commands should be restrictly formatted. Enter \'H\' or \'h\' for help. \n" ;
-      } 
+      }
       cout << "\n";
    } while (true);
 }
