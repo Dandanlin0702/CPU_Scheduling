@@ -1,13 +1,16 @@
 #ifndef CPU_H
 #define CPU_H
 
-#include <list>
-#include <vector>
+#include <map>
+#include <cmath>
+#include <queue>
 #include <iostream>
 using namespace std;
 
 #include "PCB.h"
 #include "Memory.h"
+
+const int max = INT_MAX;
 
 class CPU {
 public:
@@ -21,7 +24,7 @@ public:
    // Terminate the current executing process
    void terminateTheCurrentProcess();
    // Function to find next process to execute
-   void nextProcessToExecute();
+   void executeNextProcess();
 
    // Functions for command 'S r', first, show the process in CPU. Then, show process in ReadyQueue
    void showProcessInCPU();
@@ -31,7 +34,8 @@ private:
    int currPID_ = 0;
    int currPriorityLevel_ = 0;
 
-   vector<list<int>> readyQueue_;
+   map<int, queue<int>, std::greater<int>> readyQueue_;
+   map<int, queue<int>>::iterator it;
 
    PCB PCB_;
    Memory Memory_;

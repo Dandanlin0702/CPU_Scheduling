@@ -15,27 +15,71 @@ void CPU::decideAction(int PID, int priorityLevel) {
 }
 
 void CPU::putInReadyQueue(int PID, int priorityLevel) {
-   
+   it = readyQueue_.find(priorityLevel-1);
+
+   if (it == readyQueue_.end()) {
+      queue<int> listOfProcess;
+      listOfProcess.push(PID);
+
+      readyQueue_.insert(pair<int, queue<int>>(priorityLevel-1, listOfProcess));
+   } else {
+      it->second.push(PID);
+   }
 }
 
 void CPU::terminateTheCurrentProcess() {
    // The process that currently uses the CPU terminates. It leaves the system immediately
-   nextProcessToExecute();
+   executeNextProcess();
 
    // Release the memory used by the current executing process
    Memory_.releaseMemory(PCB_.getPID());
 }
 
-void CPU::nextProcessToExecute() {
+void CPU::executeNextProcess() {
    // Find next process with highest priorityLevel
+   it = readyQueue_.begin();
+   if (readyQueue_.empty()) {
+      currPID_ = 0;
+      currPriorityLevel_ = 0;
 
+      return;
+   } else if (!it->second.empty()){
+      currPID_ = it->second.front();
+      currPriorityLevel_ = it->first + 1;
+
+      it->second.pop();
+
+      if (it->second.empty()) {
+         readyQueue_.erase(it);
+      }
+   }
 }
 
+
 void CPU::showProcessInCPU() {
-   //
+   if (currPID_ == 0)
+      cout << "There's no process in the CPU right now. \n";
+
+   else
+      cout << "Process " << currPID_ << " is using the CPU. \n"
+           << "Following processes are waiting in Ready Queue: \n";
 }
 void CPU::showProcessInReadyQueue() {
    // Iterate through ReadyQueue show the process
+   if (readyQueue_.empty()) {
+      cout << "Ready Queue is empty \n";
+   } else {
+      it = readyQueue_.begin();
+      queue<int> tempQueue = it->second;
+
+      while (it != readyQueue_.end()) {
+         while (!tempQueue.empty()) {
+            cout << " Process " << tempQueue.front() << " with priority of " << it->first << endl;
+
+            tempQueue.pop();
+         }
+      }
+   }
 }
 
 #endif
