@@ -1,37 +1,37 @@
 #include "Devices.h"
 
-void Devices::setUpReadyQueue(const int numberOfHardDisks_) {
+void Devices::requestDiskAccess(int diskNumber, string fileName) {
+
+}
+
+
+void Devices::setUpReadyQueue() {
 
 }
 void Devices::setUpIOQueue() {
 
 }
 
-void Devices::putInReadyQueue() {
+void Devices::releaseDisk(int diskNumber) {
 
 }
 
-void Devices::showProcessInCPU() {
+void Devices::putInReadyQueue(int priorityLevel, int PID) {
 
 }
 
-void Devices::showProcessInReadyQueue() {
+/****************Command S****************************************/
+void Devices::showProcessInReadyQueue() {}
 
-}
+void Devices::showProcessInHardDisk() {}
 
-void Devices::showProcessInHardDisk() {
-
-}
-
-void Devices::showProcessInWaitingQueue() {
-
-}
+void Devices::showProcessInWaitingQueue() {}
 
 //For each busy hard disk show the process that uses it and show its I/O-queue. Make sure to display the filenames for each process.
-void Devices::showIOQueue(int hardDiskNumber_) {
+void Devices::showIOQueue(int hardDiskNumber) {
 
 }
 // Get filename for process with PID number PID_
-void Devices::getFileName(int PID_) {
+void Devices::getFileName(int PID) {
 
 }

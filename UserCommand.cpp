@@ -1,61 +1,77 @@
 #include "UserCommand.h"
 
-void UserCommand::commandIsA(string userCommand_) {
-   // New Process arrives obtain Priority Level
+void UserCommand::commandIsA(string userCommand) {
+   stringstream ss;
+   ss << userCommand;
+
+   char commandType;
    int priorityLevel = 0;
-   createNewProcess(userCommand_, priorityLevel);
+   int PID = PCB_.assignPID();
 
-   // Create PCB and Assign PID
-   Memory_.createPCB();
-   // Allocate Memory for it's first page
-
-   // Decide action: put the ready queue or use CPU
-
-}
-
-void UserCommand::createNewProcess(string userCommand_, int& priorityLevel_) {
-   // Obtain the priority level of new process
-   int priorityLevel = stoi(userCommand_.substr(2, userCommand_.size()-1));
-
+   ss >> commandType >> priorityLevel;
    if (priorityLevel < 1) {
       cout << "ERROR \n Please enter a valid priority level. \n";
    }
+
+   // Allocate Memory for it's first page
+   Memory_.allocateMemoryForProcess(PID, priorityLevel);
+   // Decide action: put the ready queue or use CPU
+   CPU_.decideAction(PID, priorityLevel);
 }
 
-void UserCommand::releaseDisk(string userCommand_) {
-   int diskNumber = stoi(userCommand_.substr(2, userCommand_.size()-1));
+void UserCommand::commandIsD(string userCommand) {
+   stringstream ss;
+   int diskNumber_;
+   char commandType_;
 
-   if (diskNumber <1) {
-      cout << "ERROR \n Please enter a valid disk number. \n";
-   }
+   ss << userCommand;
+   ss >> commandType_ >> diskNumber_;
 
+   Devices_.releaseDisk(diskNumber_);
 }
 
-void UserCommand::requestDiskAccess(string userCommand_) {
+void UserCommand::commandIsd(string userCommand) {
+   stringstream ss;
+   int diskNumber_;
+   char commandType_;
+   string fileName_;
 
+   ss << userCommand;
+   ss >> commandType_ >> diskNumber_ >> fileName_;
+
+   Devices_.requestDiskAccess(diskNumber_, fileName_);
 }
 
-void UserCommand::terminateTheCurrentProcess() {
-   CPU_.terminateTheCurrentProcess();
+void UserCommand::commandIsT() { CPU_.terminateTheCurrentProcess(); }
+
+void UserCommand::commandIsM(string userCommand) {
+   stringstream ss;
+   char commandType_;
+   int memoryAddress_;
+
+   ss << userCommand;
+   ss >> commandType_ >> memoryAddress_;
+
+   Memory_.requestMemoryOperation(memoryAddress_);
 }
 
-void UserCommand::requestMemoryAccess(string userCommand_) {
-   size_t memoryAddress = userCommand_.at(2);
+void UserCommand::commandIsS(string userCommand) {
+   stringstream ss;
+   char commandType_, commandDetail_;
 
+   ss << userCommand;
+   ss >> commandType_ >> commandDetail_;
 
-}
-
-void UserCommand::showDetails(string userCommand_) {
    // Check is the command is S r
-   if (userCommand_.at(2) == 'r') {
+   if (commandDetail_ == 'r') {
       // When command is S r call commandSR() function
-      commandSR();
-   } else if (userCommand_.at(2) == 'i') {
+      commandIsSR();
+   } else if (commandDetail_ == 'i') {
       // When command is S i
-      commandSI();
-   } else if (userCommand_.at(2) == 'm') {
+      commandIsSI();
+   } else if (commandDetail_ == 'm') {
       // When command is S m
-      commandSM();
+      commandIsSM();
    } else {
       cout << "Sorry you entered an unknown command or your command is not correctly formatted\n Please enter again\n";
    }
@@ -63,10 +79,11 @@ void UserCommand::showDetails(string userCommand_) {
    return;
 }
 
+/**************** Private Member Function for Command S ***********/
 // Function to show
    // 1. what process is currently using the cpu
    // 2. What processed are waiting in the ready-queue
-void UserCommand::commandSR () {
+void UserCommand::commandIsSR () {
    CPU_.showProcessInCPU();
    CPU_.showProcessInReadyQueue();
 }
@@ -75,14 +92,12 @@ void UserCommand::commandSR () {
    // 1. What processes are currently using the hard disks
    // 2. What processes are waiting to use the hard disk
    // For each busy hard disk show the process that uses it and show its I/O-queue. Make sure to display the filenames for each process.
-void UserCommand::commandSI () {
+void UserCommand::commandIsSI () {
    Devices_.showProcessInHardDisk();
    Devices_.showProcessInWaitingQueue();
 }
 
-// Function to show
-   // Shows the state of memory.
-   // For each used frame display the process number that occupies it and the page number stored in it
-void UserCommand::commandSM () {
-   Memory_.showMemoryState();
+/***************** Memory Related Actions *************************/
+void UserCommand::commandIsSM () {
+   Memory_.snapshotSystem();
 }

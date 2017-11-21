@@ -4,35 +4,40 @@
 #include <iostream>
 using namespace std;
 
-struct PCB {
-	// Process indentifier
-	int pid;
 
-};
 
 class Memory {
 public:
 	Memory() {}
-   Memory(long int ramMemory_, int pageSize_, int numberOfHardDisks_)
-   : ramMemory(ramMemory_), pageSize(pageSize_), numberOfHardDisks(numberOfHardDisks_) {}
+   Memory(long int ramMemory, int pageSize, int numberOfHardDisks)
+   : ramMemory_(ramMemory), pageSize_(pageSize), numberOfHardDisks_(numberOfHardDisks) {}
    ~Memory() {}
 
-	void createPCB();
+	// Allocate memory for process
+	void allocateMemoryForProcess(int PID, int priorityLevel);
+	// Function for m command
+	void requestMemoryOperation(int memoryAddress);
+	// Release Memory for current process
+	void releaseMemory(int PID);
+	// Show State of Memory
+	void snapshotSystem();
 
-   void setUpSystem(long int ramMemory_, int pageSize_, int numberOfHardDisks_);
-	// Create new Process
-	void createNewProcess(int priorityLevel_);
+
+
+
+
+
+
 	// Load page into memory
 	void loadPageIntoSystem();
 
-	// Show State of Memory
-	void showMemoryState();
 
-	// Release Memory
-	void releaseMemory(int PID_);
+
 private:
-	long int ramMemory = 0;
-	int pageSize = 0, numberOfHardDisks = 0;
+	int timeStamp_ = 1;
+	int pageNumber_ = 0;
+	long int ramMemory_ = 0;
+	int pageSize_ = 0, numberOfHardDisks_ = 0;
 };
 
 #endif

@@ -16,14 +16,13 @@ public:
    StartApp() {}
    ~StartApp() {}
 
-   // Function to get uer commands
+   // Function to start the app
    void runApp();
 
 private:
    UserCommand userCommand_;
-
-   // Functions for user to check commands
-   string helpMenu();
+   // Helper functions for user to check avaiable commands
+   void helpMenu();
 };
 
 #endif

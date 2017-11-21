@@ -4,7 +4,6 @@
 #include "StartApp.h"
 
 void StartApp::runApp() {
-   // Variable to store user commands
    string userCommand;
 
    long int ramMemory = 0;
@@ -51,33 +50,45 @@ void StartApp::runApp() {
          getline (cin, userCommand);
       }
 
-      if (userCommand.at(0) == 'Q' || userCommand.at(0) == 'q') {
-         cout << "Program terminatting";
-         exit(0);
-      } else if (userCommand.at(0) == 'H' || userCommand.at(0) == 'h') {
-         string menu = helpMenu();
-         cout << menu << endl;
-      } else if (userCommand.at(0) == 'A' && userCommand.at(1) == ' ') {
-         userCommand_.commandIsA(userCommand);
-      } else if (userCommand.at(0) == 'D' && userCommand.at(1) == ' ') {
-         userCommand_.releaseDisk(userCommand);
-      } else if (userCommand.at(0) == 'd' && userCommand.at(1) == ' ') {
-         userCommand_.requestDiskAccess(userCommand);
-      } else if (userCommand.at(0) == 't') {
-         userCommand_.terminateTheCurrentProcess();
-      } else if (userCommand.at(0) == 'm' && userCommand.at(1) == ' ') {
-         userCommand_.requestMemoryAccess(userCommand);
-      } else if (userCommand.at(0) == 'S' && userCommand.at(1) == ' ') {
-         userCommand_.showDetails(userCommand);
-      } else {
-         cout << "Unknown user command (" << userCommand << ") invoked. \n"
-              << "All commands should be restrictly formatted. Enter \'H\' or \'h\' for help. \n" ;
+      switch (userCommand.at(0)) {
+         case 'Q':
+         case 'q':
+            cout << "Program terminatting";
+            exit(0);
+            break;
+         case 'H':
+         case 'h':
+            helpMenu();
+            break;
+         case 'A':
+            userCommand_.commandIsA(userCommand);
+            break;
+         case 'D':
+            userCommand_.commandIsD(userCommand);
+            break;
+         case 'd':
+            userCommand_.commandIsd(userCommand);
+            break;
+         case 't':
+            userCommand_.commandIsT();
+            break;
+         case 'm':
+            userCommand_.commandIsM(userCommand);
+            break;
+         case 'S':
+            userCommand_.commandIsS(userCommand);
+            break;
+         default:
+            cout << "Unknown user command (" << userCommand << ") invoked. \n"
+                 << "All commands should be restrictly formatted. Enter \'H\' or \'h\' for help. \n" ;
+            break;
       }
+
       cout << "\n";
    } while (true);
 }
 
-string StartApp::helpMenu () {
+void StartApp::helpMenu () {
    stringstream ss;
    ss << "Following are the commands you can use: \n"
       << "1. Exit:\n"
@@ -103,7 +114,7 @@ string StartApp::helpMenu () {
       << "9. Request a memory operation:\n"
          << "\t\"m <memory address>\"\n";
 
-   return ss.str();
+   cout << ss.str();
 }
 
 #endif
