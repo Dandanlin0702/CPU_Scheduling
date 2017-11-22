@@ -52,7 +52,8 @@ void UserCommand::commandIsM(string userCommand) {
    ss << userCommand;
    ss >> commandType_ >> memoryAddress_;
 
-   Memory_.requestMemoryOperation(memoryAddress_);
+   int PID_ = CPU_.getCurrPID();
+   Memory_.requestMemoryOperation(PID_, memoryAddress_);
 }
 
 void UserCommand::commandIsS(string userCommand) {

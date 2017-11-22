@@ -30,6 +30,7 @@ public:
    void showProcessInCPU();
    void showProcessInReadyQueue();
 
+   int getCurrPID() { return currPID_; }
 private:
    int currPID_ = 0;
    int currPriorityLevel_ = 0;
