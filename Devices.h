@@ -16,12 +16,19 @@ struct HardDisk {
 class Devices {
 public:
    Devices() {}
-   Devices(int numberOfHardDisks):numberOfHardDisks_(numberOfHardDisks), hardDisk_(numberOfHardDisks_, nullptr) {}
+   //Devices(int numberOfHardDisks):numberOfHardDisks_(numberOfHardDisks) {}
    ~Devices() {}
+
+   void getDeviceInfo();
 
    void requestDiskAccess(int diskNumber, string fileName);
    void releaseDisk(int diskNumber);
 
+/************************Setter******************************/
+   void setHardDiskInfo (int numberOfHardDisks) { numberOfHardDisks_ = numberOfHardDisks; }
+
+/************************Getter******************************/
+   int getNumberOfHardDisks() { return numberOfHardDisks_; }
 
 /******************** User Input Command S ****************************/
    // Show Process

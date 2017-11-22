@@ -6,7 +6,7 @@
 void StartApp::runApp() {
    string userCommand;
 
-   long int ramMemory = 0;
+   unsigned int ramMemory = 0;
    int pageSize = 0, numberOfHardDisks = 0;
 
    cout << "How much RAM memory(in bytes) is there on the simulated computer? (Range from 1-4000000000) \n> ";
@@ -17,7 +17,7 @@ void StartApp::runApp() {
       cin >> ramMemory;
    }
 
-   cout << "What is the size of a page/frame? \n> ";
+   cout << "What is the size of your page/frame? \n> ";
    cin >> pageSize;
 
    while (pageSize < 0 || pageSize > ramMemory) {
@@ -33,17 +33,24 @@ void StartApp::runApp() {
       cin >> numberOfHardDisks;
    }
 
-   Memory memorySystem_ = Memory(ramMemory, pageSize);
-   Devices hardDisk_ = Devices(numberOfHardDisks);
+   userCommand_.setMemoryInfo(ramMemory, pageSize);
+   userCommand_.setHardDiskInfo(numberOfHardDisks);
+   //Memory memorySystem_ = Memory(ramMemory, pageSize);
+   //Devices hardDisk_ = Devices(numberOfHardDisks);
 
-   cout << "Enter 'H' or 'h' for HELP \n"
-        << "Enter 'Q' or 'q' to QUIT \n"
-        << "Else, please enter command: \n";
+   // Memory memorySystem_;
+   // memorySystem_.setRamMemory(ramMemory);
+   // memorySystem_.setPageSize(pageSize);
+
+   //hardDisk_.setNumberOfHardDisks(numberOfHardDisks);
+   cout << " Enter 'H' or 'h' for HELP \n"
+        << " Enter 'Q' or 'q' to QUIT \n"
+        << " Else, please enter command: \n";
 
    getline (cin, userCommand);
    // While loop keeps reading user's input
    do {
-      cout << ">> ";
+      cout << "> ";
       getline (cin, userCommand);
 
       if (userCommand.size() == 0) {

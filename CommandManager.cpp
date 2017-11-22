@@ -1,5 +1,4 @@
 #include "CommandManager.h"
-
 /*
 void CommandManager::decideAction(int PID, int priorityLevel) {
    CPU_.decideAction(PID, priorityLevel);

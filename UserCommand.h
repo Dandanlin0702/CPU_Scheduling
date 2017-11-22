@@ -5,7 +5,7 @@
 #include <sstream>
 #include <iostream>
 
-#include "Devices.h"
+#include "CommandManager.h"
 
 using namespace std;
 
@@ -13,6 +13,9 @@ class UserCommand {
 public:
    UserCommand() {}
    ~UserCommand() {}
+
+   void setMemoryInfo(unsigned int ramMemory, int pageSize);
+   void setHardDiskInfo(int numberOfHardDisks);
 
    // Function for command A
    void commandIsA(string userCommand);
@@ -28,10 +31,7 @@ public:
    void commandIsS(string userCommand);
 
 private:
-   CPU CPU_;
-   PCB PCB_;
-   Memory Memory_;
-   Devices Devices_;
+   CommandManager commandManager_;
 
    void commandIsSR ();
    void commandIsSI ();

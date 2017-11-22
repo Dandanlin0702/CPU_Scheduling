@@ -1,17 +1,33 @@
 #include "Devices.h"
 
-void Devices::requestDiskAccess(int diskNumber, string fileName) {
-   CPU_.removeFromCPU();
+void Devices::getDeviceInfo() {
+   cout << "How many hard disks the simulated computer has? \n> ";
+   cin >> numberOfHardDisks_;
 
-   if (diskNumber >= hardDisk_.size()) {
-      cout << "Sorry you entered an invalid diskNumber, please try again \n>>";
+   while (numberOfHardDisks_ < 0) {
+      cout << "Youe input is invalid, please enter again\n> ";
+      cin >> numberOfHardDisks_;
+   }
+}
+
+void Devices::requestDiskAccess(int diskNumber, string fileName) {
+   cout << "Curr disk num is :" << numberOfHardDisks_ << endl;
+
+   if (diskNumber > numberOfHardDisks_) {
+      cout << "Sorry you entered an invalid diskNumber, please try again \n";
 
       return;
    } else {
-      hardDisk_[diskNumber-1]->PID_ = CPU_.getCurrPID();
-      hardDisk_[diskNumber-1]->fileName_ = fileName;
-      hardDisk_[diskNumber-1]->isOccupied_ = true;
+      HardDisk* tempHardDisk = new HardDisk;
+
+      tempHardDisk->PID_ = CPU_.getCurrPID();
+      tempHardDisk->fileName_ = fileName;
+      tempHardDisk->isOccupied_ = true;
+
+      hardDisk_[diskNumber-1] = tempHardDisk;
    }
+
+   CPU_.removeFromCPU();
 }
 
 void Devices::releaseDisk(int diskNumber) {

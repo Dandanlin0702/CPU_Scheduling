@@ -20,6 +20,7 @@ public:
 
 private:
    UserCommand userCommand_;
+
    // Helper functions for user to check avaiable commands
    void helpMenu();
 };

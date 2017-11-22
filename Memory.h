@@ -15,10 +15,18 @@ struct FrameTable {
 class Memory {
 public:
 	Memory() {}
-   Memory(long int ramMemory, int pageSize)
-   : ramMemory_(ramMemory), pageSize_(pageSize), numOfFrames_(ramMemory/pageSize) {}
-	Memory(int memoryAddress) : memoryAddress_(memoryAddress) {}
    ~Memory() {}
+
+
+	void getMemoryInfo();
+
+/*****************************Setter*******************************/
+	void setMemoryInfo(unsigned int ramMemory, int pageSize) { ramMemory_ = ramMemory; pageSize_ = pageSize; }
+	void setMemoryAddress(int memoryAddress) { memoryAddress_ = memoryAddress; }
+/*****************************Getter********************************/
+	unsigned int getRamMemory() { return ramMemory_; }
+	int getPageSize() { return pageSize_; }
+
 
 	// Load page into memory
 	void loadPageIntoSystem();
@@ -32,13 +40,12 @@ public:
 	void snapshotSystem();
 
 private:
-	long int ramMemory_;
+	unsigned int ramMemory_;
 	int pageSize_;
 
-	int memoryAddress_;
-	int pageNumber_ = -1;
-
 	int timeStamp_ = 1, numOfFrames_ = 0;
+	int memoryAddress_ = 0, pageNumber_ = 0;
+
 	vector<FrameTable*> frameTable_;
 
 	void updateFrameTable(int PID, int pageNumber);

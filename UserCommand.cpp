@@ -1,12 +1,19 @@
 #include "UserCommand.h"
 
+void UserCommand::setMemoryInfo(unsigned int ramMemory, int pageSize) {
+   commandManager_.setMemoryInfo(ramMemory, pageSize);
+}
+void UserCommand::setHardDiskInfo(int numberOfHardDisks) {
+   commandManager_.setHardDiskInfo(numberOfHardDisks);
+}
+
 void UserCommand::commandIsA(string userCommand) {
    stringstream ss;
    ss << userCommand;
 
    char commandType;
    int priorityLevel = 0;
-   int PID = PCB_.assignPID();
+   int PID = commandManager_.assignPID();
 
    ss >> commandType >> priorityLevel;
    if (priorityLevel < 1) {
@@ -14,9 +21,9 @@ void UserCommand::commandIsA(string userCommand) {
    }
 
    // Allocate Memory for it's first page
-   Memory_.allocateMemoryForProcess(PID, priorityLevel);
+   commandManager_.allocateMemoryForProcess(PID, priorityLevel);
    // Decide action: put the ready queue or use CPU
-   CPU_.decideAction(PID, priorityLevel);
+   commandManager_.decideAction(PID, priorityLevel);
 }
 
 void UserCommand::commandIsD(string userCommand) {
@@ -27,7 +34,7 @@ void UserCommand::commandIsD(string userCommand) {
    ss << userCommand;
    ss >> commandType_ >> diskNumber_;
 
-   Devices_.releaseDisk(diskNumber_);
+   commandManager_.releaseDisk(diskNumber_);
 }
 
 void UserCommand::commandIsd(string userCommand) {
@@ -39,10 +46,12 @@ void UserCommand::commandIsd(string userCommand) {
    ss << userCommand;
    ss >> commandType_ >> diskNumber_ >> fileName_;
 
-   Devices_.requestDiskAccess(diskNumber_, fileName_);
+   commandManager_.requestDiskAccess(diskNumber_, fileName_);
 }
 
-void UserCommand::commandIsT() { CPU_.terminateTheCurrentProcess(); }
+void UserCommand::commandIsT() {
+   commandManager_.terminateTheCurrentProcess();
+}
 
 void UserCommand::commandIsM(string userCommand) {
    stringstream ss;
@@ -52,10 +61,10 @@ void UserCommand::commandIsM(string userCommand) {
    ss << userCommand;
    ss >> commandType_ >> memoryAddress_;
 
-   int PID_ = CPU_.getCurrPID();
+   int PID_ = commandManager_.getCurrPID();
 
-   Memory memorySystem_ = Memory(memoryAddress_);
-   Memory_.requestMemoryOperation(PID_);
+   commandManager_.setMemoryAddress(memoryAddress_);
+   commandManager_.requestMemoryOperation(PID_);
 }
 
 void UserCommand::commandIsS(string userCommand) {
@@ -87,8 +96,8 @@ void UserCommand::commandIsS(string userCommand) {
    // 1. what process is currently using the cpu
    // 2. What processed are waiting in the ready-queue
 void UserCommand::commandIsSR () {
-   CPU_.showProcessInCPU();
-   CPU_.showProcessInReadyQueue();
+   commandManager_.showProcessInCPU();
+   commandManager_.showProcessInReadyQueue();
 }
 
 // Function to show
@@ -96,10 +105,10 @@ void UserCommand::commandIsSR () {
    // 2. What processes are waiting to use the hard disk
    // For each busy hard disk show the process that uses it and show its I/O-queue. Make sure to display the filenames for each process.
 void UserCommand::commandIsSI () {
-   Devices_.showProcessInHardDisk();
+   commandManager_.showProcessInHardDisk();
 }
 
 /***************** Memory Related Actions *************************/
 void UserCommand::commandIsSM () {
-   Memory_.snapshotSystem();
+   commandManager_.snapshotSystem();
 }

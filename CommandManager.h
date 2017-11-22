@@ -1,5 +1,3 @@
-
-/*
 #ifndef COMMAND_MANAGER_H
 #define COMMAND_MANAGER_H
 
@@ -10,23 +8,27 @@ using namespace std;
 
 class CommandManager {
 public:
+   // System Set up
+   void setMemoryInfo(unsigned int ramMemory, int pageSize) { CPU_.setMemoryInfo(ramMemory, pageSize); }
 
    // CPU related functions
    int assignPID() { return CPU_.assignPID(); }
    int getCurrPID() { return CPU_.getCurrPID(); }
 
-   void decideAction(int PID, int priorityLevel)
-   void terminateTheCurrentProcess();
-   void showProcessInCPU();
-   void showProcessInReadyQueue();
+   void decideAction(int PID, int priorityLevel) { CPU_.decideAction(PID, priorityLevel); }
+   void terminateTheCurrentProcess() { CPU_.terminateTheCurrentProcess(); }
+   void showProcessInCPU() { CPU_.showProcessInCPU(); }
+   void showProcessInReadyQueue() { CPU_.showProcessInReadyQueue(); }
 
-   void snapshotSystem();
-   void requestMemoryOperation(int PID, int memoryAddress);
-   void allocateMemoryForProcess(int PID, int priorityLevel);
+   void setMemoryAddress(int memoryAddress) { CPU_.setMemoryAddress(memoryAddress); }
+   void snapshotSystem() { CPU_.snapshotSystem(); }
+   void requestMemoryOperation(int PID) { CPU_.requestMemoryOperation(PID); }
+   void allocateMemoryForProcess(int PID, int priorityLevel) { CPU_.allocateMemoryForProcess(PID, priorityLevel); }
 
-   void releaseDisk(int diskNumber);
-   void requestDiskAccess(int diskNumber, string fileName);
-   void showProcessInHardDisk();
+   void setHardDiskInfo(int numberOfHardDisks) { Devices_.setHardDiskInfo(numberOfHardDisks); }
+   void releaseDisk(int diskNumber) { Devices_.releaseDisk(diskNumber); }
+   void requestDiskAccess(int diskNumber, string fileName) { Devices_.requestDiskAccess(diskNumber, fileName); }
+   void showProcessInHardDisk() { Devices_.showProcessInHardDisk(); }
 
 
 private:
@@ -35,4 +37,3 @@ private:
 };
 
 #endif
-*/

@@ -1,7 +1,27 @@
 #include "Memory.h"
+/*
+void Memory::getMemoryInfo() {
+   cout << "How much RAM memory(in bytes) is there on the simulated computer? (Range from 1-4000000000) \n> ";
+   cin >> ramMemory_;
+   cout << "Testing " << ramMemory_ << endl;
+   while (ramMemory_ > 4000000000 || ramMemory_ <= 0) {
+      cout << "Youe input is invalid, please enter again\n> ";
+      cin >> ramMemory_;
+   }
 
+   cout << "What is the size of your page/frame? \n> ";
+   cin >> pageSize_;
+
+   while (pageSize_ < 0 || pageSize_ > ramMemory_) {
+      cout << "Youe pagesize is invalid, please enter again\n> ";
+      cin >> pageSize_;
+   }
+}
+*/
 void Memory::allocateMemoryForProcess(int PID, int priorityLevel) {
    // Check if the process is the first process created, if yes, load page 0 into memory
+   cout << "Testing: ram: " << ramMemory_ << " nnn " << pageSize_ << endl;
+
    if (PID == 1) {
       FrameTable* tempTable = new FrameTable;
 
@@ -17,8 +37,8 @@ void Memory::allocateMemoryForProcess(int PID, int priorityLevel) {
 
 void Memory::requestMemoryOperation(int PID) {
    // Caculate which page the current executing process is in
-   //pageNumber_ =memoryAddress_ / pageSize_;
-   updateFrameTable(PID, pageNumber_);
+   cout << "Testing page number: " << memoryAddress_ / pageSize_ << endl;
+   updateFrameTable(PID, memoryAddress_ / pageSize_);
 }
 
 void Memory::releaseMemory(int PID) {}
