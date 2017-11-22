@@ -33,7 +33,8 @@ void StartApp::runApp() {
       cin >> numberOfHardDisks;
    }
 
-   Memory memorySystem_ = Memory(ramMemory, pageSize, numberOfHardDisks);
+   Memory memorySystem_ = Memory(ramMemory, pageSize);
+   Devices hardDisk_ = Devices(numberOfHardDisks);
 
    cout << "Enter 'H' or 'h' for HELP \n"
         << "Enter 'Q' or 'q' to QUIT \n"

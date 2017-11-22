@@ -14,6 +14,11 @@ void CPU::decideAction(int PID, int priorityLevel) {
    }
 }
 
+void CPU::removeFromCPU() {
+   putInReadyQueue(currPID_, currPriorityLevel_);
+   executeNextProcess();
+}
+
 void CPU::putInReadyQueue(int PID, int priorityLevel) {
    it = readyQueue_.find(priorityLevel-1);
 
@@ -79,6 +84,8 @@ void CPU::showProcessInReadyQueue() {
             tempQueue.pop();
          }
       }
+
+      return;
    }
 }
 

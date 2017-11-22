@@ -12,10 +12,13 @@ using namespace std;
 
 const int max = INT_MAX;
 
+
 class CPU {
 public:
    CPU() {}
    ~CPU() {}
+
+   int getCurrPID() { return currPID_; }
 
    // Function to check whether the new process can preempt the current process or not
    void decideAction(int PID, int priorityLevel);
@@ -30,16 +33,16 @@ public:
    void showProcessInCPU();
    void showProcessInReadyQueue();
 
-   int getCurrPID() { return currPID_; }
+
 private:
+   PCB PCB_;
+   Memory Memory_;
+
    int currPID_ = 0;
    int currPriorityLevel_ = 0;
 
    map<int, queue<int>, std::greater<int>> readyQueue_;
    map<int, queue<int>>::iterator it;
-
-   PCB PCB_;
-   Memory Memory_;
 };
 
 #endif

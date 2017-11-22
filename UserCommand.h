@@ -5,9 +5,6 @@
 #include <sstream>
 #include <iostream>
 
-#include "CPU.h"
-#include "PCB.h"
-#include "Memory.h"
 #include "Devices.h"
 
 using namespace std;
@@ -34,7 +31,7 @@ private:
    CPU CPU_;
    PCB PCB_;
    Memory Memory_;
-   Devices Devices_; 
+   Devices Devices_;
 
    void commandIsSR ();
    void commandIsSI ();

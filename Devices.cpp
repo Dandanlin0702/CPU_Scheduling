@@ -1,31 +1,37 @@
 #include "Devices.h"
 
 void Devices::requestDiskAccess(int diskNumber, string fileName) {
+   CPU_.removeFromCPU();
 
-}
+   if (diskNumber >= hardDisk_.size()) {
+      cout << "Sorry you entered an invalid diskNumber, please try again \n>>";
 
-
-void Devices::setUpReadyQueue() {
-
-}
-void Devices::setUpIOQueue() {
-
+      return;
+   } else {
+      hardDisk_[diskNumber-1]->PID_ = CPU_.getCurrPID();
+      hardDisk_[diskNumber-1]->fileName_ = fileName;
+      hardDisk_[diskNumber-1]->isOccupied_ = true;
+   }
 }
 
 void Devices::releaseDisk(int diskNumber) {
 
 }
 
-void Devices::putInReadyQueue(int priorityLevel, int PID) {
+/****************Command S****************************************/
+void Devices::showProcessInHardDisk() {
+   for (int i = 0; i < hardDisk_.size(); ++i) {
+      if (hardDisk_[i]->isOccupied_ == true) {
+         cout << "Hard Disk " << i << ": process " << hardDisk_[i]->PID_ << endl;
 
+         showProcessInWaitingQueue(i);
+      }
+   }
 }
 
-/****************Command S****************************************/
-void Devices::showProcessInReadyQueue() {}
+void Devices::showProcessInWaitingQueue(int hardDiskNumber) {
 
-void Devices::showProcessInHardDisk() {}
-
-void Devices::showProcessInWaitingQueue() {}
+}
 
 //For each busy hard disk show the process that uses it and show its I/O-queue. Make sure to display the filenames for each process.
 void Devices::showIOQueue(int hardDiskNumber) {

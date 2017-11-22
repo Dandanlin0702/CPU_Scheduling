@@ -95,7 +95,6 @@ void UserCommand::commandIsSR () {
    // For each busy hard disk show the process that uses it and show its I/O-queue. Make sure to display the filenames for each process.
 void UserCommand::commandIsSI () {
    Devices_.showProcessInHardDisk();
-   Devices_.showProcessInWaitingQueue();
 }
 
 /***************** Memory Related Actions *************************/

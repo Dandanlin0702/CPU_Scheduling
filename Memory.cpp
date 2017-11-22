@@ -1,17 +1,19 @@
-#ifndef MEMORY_CPP
-#define MEMORY_CPP
-
 #include "Memory.h"
 
 void Memory::allocateMemoryForProcess(int PID, int priorityLevel) {
-
    // Check if the process is the first process created, if yes, load page 0 into memory
    if (PID == 1) {
+      FrameTable* tempTable;
+
       // If current process id == 1, mean it is the very first process we created
       // So, load page #0 to frameTable #0
-      frameTable_[0]->pageNumber_ = 0;
-      frameTable_[0]->PID_ = PID;
-      frameTable_[0]->timeStamp_ = 1;
+      /*
+         tempTable->timeStamp_ = 1;
+         tempTable->pageNumber_ = 0;
+         tempTable->PID_ = PID;
+      */
+
+      frameTable_.push_back(tempTable);
    } else {
       // If it is not the first process, do nothing until it requests memory opeartion
       ;
@@ -70,6 +72,3 @@ void Memory::replaceWithLRU(int PID, int pageNumber) {
    frameTable_[frameNumWithLRU_]->PID_ = PID;
    frameTable_[frameNumWithLRU_]->timeStamp_ = timeStamp_+1;
 }
-
-
-#endif
