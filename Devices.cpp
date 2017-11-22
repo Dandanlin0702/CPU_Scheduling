@@ -20,11 +20,15 @@ void Devices::releaseDisk(int diskNumber) {
 
 /****************Command S****************************************/
 void Devices::showProcessInHardDisk() {
-   for (int i = 0; i < hardDisk_.size(); ++i) {
-      if (hardDisk_[i]->isOccupied_ == true) {
-         cout << "Hard Disk " << i << ": process " << hardDisk_[i]->PID_ << endl;
+   if (hardDisk_.size() == 0) {
+      cout << "No process is using the Hard Disk ATM. \n";
+   } else {
+      for (int i = 0; i < hardDisk_.size(); ++i) {
+         if (hardDisk_[i]->isOccupied_ == true) {
+            cout << "Hard Disk " << i << ": process " << hardDisk_[i]->PID_ << endl;
 
-         showProcessInWaitingQueue(i);
+            showProcessInWaitingQueue(i);
+         }
       }
    }
 }

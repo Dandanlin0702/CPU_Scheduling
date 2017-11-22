@@ -22,6 +22,8 @@ public:
 
    // Function to check whether the new process can preempt the current process or not
    void decideAction(int PID, int priorityLevel);
+   // Removecurrently executing process out CPU
+   void removeFromCPU();
    // Put process with PID into ReadyQueue
    void putInReadyQueue(int PID, int priorityLevel);
    // Terminate the current executing process

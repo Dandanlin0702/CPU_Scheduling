@@ -3,26 +3,21 @@
 void Memory::allocateMemoryForProcess(int PID, int priorityLevel) {
    // Check if the process is the first process created, if yes, load page 0 into memory
    if (PID == 1) {
-      FrameTable* tempTable;
+      FrameTable* tempTable = new FrameTable;
 
       // If current process id == 1, mean it is the very first process we created
       // So, load page #0 to frameTable #0
-      /*
-         tempTable->timeStamp_ = 1;
-         tempTable->pageNumber_ = 0;
-         tempTable->PID_ = PID;
-      */
+      tempTable->timeStamp_ = 1;
+      tempTable->pageNumber_ = 0;
+      tempTable->PID_ = PID;
 
       frameTable_.push_back(tempTable);
-   } else {
-      // If it is not the first process, do nothing until it requests memory opeartion
-      ;
    }
 }
 
-void Memory::requestMemoryOperation(int PID, int memoryAddress) {
+void Memory::requestMemoryOperation(int PID) {
    // Caculate which page the current executing process is in
-   int pageNumber_ = ramMemory_ / memoryAddress;
+   //pageNumber_ =memoryAddress_ / pageSize_;
    updateFrameTable(PID, pageNumber_);
 }
 
@@ -31,30 +26,34 @@ void Memory::releaseMemory(int PID) {}
 // Show State of Memory
 // For each used frame display the process number that occupies it and the page number stored in it
 void Memory::snapshotSystem() {
-   cout << "-----------------------------------------------------\n"
-        << "FrameNumber" << "  PageNumber" << "  PID" << "  TimeStamp \n"
-        << "-----------------------------------------------------\n";
-   for (int i = 1; i < frameTable_.size(); ++i) {
-      cout << i << "  "
-           << frameTable_[i]->pageNumber_ << "  "
-           << frameTable_[i]->PID_ << "  "
-           << frameTable_[i]->timeStamp_
+   cout << "--------------------------------------------------------\n"
+        << "|   FrameNumber" << "  |  PageNumber" << "  |  PID" << "  |  TimeStamp   |\n"
+        << "--------------------------------------------------------\n";
+   for (int i = 0; i < frameTable_.size(); ++i) {
+      cout << "|       " << i << "        |      "
+           << frameTable_[i]->pageNumber_ << "       |   "
+           << frameTable_[i]->PID_ << "   |      "
+           << frameTable_[i]->timeStamp_ << "       |"
            << endl;
-      cout << "-----------------------------------------------------\n";
+      cout << "--------------------------------------------------------\n";
    }
 }
 
 /********************************Helper Function*****************/
 void Memory::updateFrameTable(int PID, int pageNumber) {
    // Check if memory if full or not, if yes, remove LRU process
-   if (frameTable_.size() == numOfFrames_) {
+   int currFrameTableNum_ = frameTable_.size();
+   if (currFrameTableNum_ == numOfFrames_) {
       replaceWithLRU(PID, pageNumber);
    } else {
-      int currFrameTableNum_ = frameTable_.size();
+      FrameTable* tempFrame = new FrameTable;
 
-      frameTable_[currFrameTableNum_]->pageNumber_ = pageNumber;
-      frameTable_[currFrameTableNum_]->PID_ = PID;
-      frameTable_[currFrameTableNum_]->timeStamp_ = timeStamp_+1;
+      timeStamp_= timeStamp_ += 1;
+      tempFrame->pageNumber_ = pageNumber;
+      tempFrame->PID_ = PID;
+      tempFrame->timeStamp_ = timeStamp_;
+
+      frameTable_.push_back(tempFrame);
    }
 }
 

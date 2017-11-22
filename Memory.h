@@ -17,26 +17,28 @@ public:
 	Memory() {}
    Memory(long int ramMemory, int pageSize)
    : ramMemory_(ramMemory), pageSize_(pageSize), numOfFrames_(ramMemory/pageSize) {}
+	Memory(int memoryAddress) : memoryAddress_(memoryAddress) {}
    ~Memory() {}
 
 	// Load page into memory
 	void loadPageIntoSystem();
-
 	// Allocate memory for process
 	void allocateMemoryForProcess(int PID, int priorityLevel);
 	// Function for m command
-	void requestMemoryOperation(int PID, int memoryAddress);
+	void requestMemoryOperation(int PID);
 	// Release Memory for current process
 	void releaseMemory(int PID);
 	// Show State of Memory
 	void snapshotSystem();
 
 private:
-	long int ramMemory_ = 0;
-	int pageSize_ = 0;
+	long int ramMemory_;
+	int pageSize_;
 
-	int timeStamp_ = 1;
-	int numOfFrames_ = 0;;
+	int memoryAddress_;
+	int pageNumber_ = -1;
+
+	int timeStamp_ = 1, numOfFrames_ = 0;
 	vector<FrameTable*> frameTable_;
 
 	void updateFrameTable(int PID, int pageNumber);

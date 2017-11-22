@@ -7,12 +7,13 @@ using namespace std;
 class PCB {
 public:
    // Create PCB for process starts from 1
-   int assignPID() { PID_+= 1; return PID_;}
+   int assignPID() { PID_+= 1; return PID_; }
    // Function to obtain the Process indentifier
    int getPID() { return PID_; }
 
 private:
-   int PID_;
+   int PID_ = 0;
+   string state = "ready"; 
 };
 
 #endif
