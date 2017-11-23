@@ -19,18 +19,16 @@ public:
    //Devices(int numberOfHardDisks):numberOfHardDisks_(numberOfHardDisks) {}
    ~Devices() {}
 
-   void getDeviceInfo();
-
    void requestDiskAccess(int diskNumber, string fileName);
    void releaseDisk(int diskNumber);
 
-/************************Setter******************************/
+/***************************** Setter *****************************/
    void setHardDiskInfo (int numberOfHardDisks) { numberOfHardDisks_ = numberOfHardDisks; }
 
-/************************Getter******************************/
+/***************************** Getter *****************************/
    int getNumberOfHardDisks() { return numberOfHardDisks_; }
 
-/******************** User Input Command S ****************************/
+/***************************** User Input Command S *****************************/
    // Show Process
    void showProcessInHardDisk();
    // Show processes are waiting to use the hard disk
@@ -40,9 +38,11 @@ private:
    CPU CPU_;
 
    int numberOfHardDisks_;
-   vector<HardDisk*>hardDisk_;
+   vector<queue<HardDisk*>>hardDisk_;
 
+   // Show theI/O queue for certain harddisk
    void showIOQueue(int hardDiskNumber);
+   // Retrieve filename for process
    void getFileName(int PID);
 };
 

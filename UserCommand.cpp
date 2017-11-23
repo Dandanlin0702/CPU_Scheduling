@@ -1,7 +1,7 @@
 #include "UserCommand.h"
 
-void UserCommand::setMemoryInfo(unsigned int ramMemory, int pageSize) {
-   commandManager_.setMemoryInfo(ramMemory, pageSize);
+void UserCommand::setMemoryInfo(unsigned int ramMemory, int pageSize, int numOfFrames) {
+   commandManager_.setMemoryInfo(ramMemory, pageSize, numOfFrames);
 }
 void UserCommand::setHardDiskInfo(int numberOfHardDisks) {
    commandManager_.setHardDiskInfo(numberOfHardDisks);

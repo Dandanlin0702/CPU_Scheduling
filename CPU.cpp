@@ -34,9 +34,10 @@ void CPU::putInReadyQueue(int PID, int priorityLevel) {
 
 void CPU::terminateTheCurrentProcess() {
    // The process that currently uses the CPU terminates. It leaves the system immediately
-   executeNextProcess();
    // Release the memory used by the current executing process
-   Memory_.releaseMemory(PCB_.getPID());
+   Memory_.releaseMemory(currPID_);
+   Memory_.removeFromFrameTable(currPID_);
+   executeNextProcess();
 }
 
 void CPU::executeNextProcess() {

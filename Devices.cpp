@@ -1,17 +1,7 @@
 #include "Devices.h"
 
-void Devices::getDeviceInfo() {
-   cout << "How many hard disks the simulated computer has? \n> ";
-   cin >> numberOfHardDisks_;
-
-   while (numberOfHardDisks_ < 0) {
-      cout << "Youe input is invalid, please enter again\n> ";
-      cin >> numberOfHardDisks_;
-   }
-}
-
 void Devices::requestDiskAccess(int diskNumber, string fileName) {
-   cout << "Curr disk num is :" << numberOfHardDisks_ << endl;
+   cout << "Total disk num is :" << numberOfHardDisks_ << endl;
 
    if (diskNumber > numberOfHardDisks_) {
       cout << "Sorry you entered an invalid diskNumber, please try again \n";
@@ -19,12 +9,14 @@ void Devices::requestDiskAccess(int diskNumber, string fileName) {
       return;
    } else {
       HardDisk* tempHardDisk = new HardDisk;
+      queue<HardDisk*> tempDiskQueue;
 
       tempHardDisk->PID_ = CPU_.getCurrPID();
       tempHardDisk->fileName_ = fileName;
       tempHardDisk->isOccupied_ = true;
 
-      hardDisk_[diskNumber-1] = tempHardDisk;
+      tempDiskQueue.push(tempHardDisk);
+      hardDisk_.push_back(tempDiskQueue);
    }
 
    CPU_.removeFromCPU();
@@ -34,23 +26,33 @@ void Devices::releaseDisk(int diskNumber) {
 
 }
 
-/****************Command S****************************************/
+/***************************** Command S *****************************/
 void Devices::showProcessInHardDisk() {
    if (hardDisk_.size() == 0) {
       cout << "No process is using the Hard Disk ATM. \n";
    } else {
       for (int i = 0; i < hardDisk_.size(); ++i) {
-         if (hardDisk_[i]->isOccupied_ == true) {
-            cout << "Hard Disk " << i << ": process " << hardDisk_[i]->PID_ << endl;
-
-            showProcessInWaitingQueue(i);
+         if (hardDisk_[i].front()->isOccupied_ == true) {
+            cout << "Hard Disk " << i+1 << ": process " << hardDisk_[i].front()->PID_ << endl;
          }
+
+         showProcessInWaitingQueue(i);
       }
    }
 }
 
 void Devices::showProcessInWaitingQueue(int hardDiskNumber) {
+   queue<HardDisk*> tempDiskQueue;
 
+   tempDiskQueue = hardDisk_[hardDiskNumber];
+   while (!tempDiskQueue.empty()) {
+      cout << "Following processes are waiting to access to hard disk number "
+           << hardDiskNumber+1 << ": \n"
+           << " Process: " << tempDiskQueue.front()->PID_
+           << endl;
+
+      tempDiskQueue.pop();
+   }
 }
 
 //For each busy hard disk show the process that uses it and show its I/O-queue. Make sure to display the filenames for each process.

@@ -33,16 +33,9 @@ void StartApp::runApp() {
       cin >> numberOfHardDisks;
    }
 
-   userCommand_.setMemoryInfo(ramMemory, pageSize);
+   userCommand_.setMemoryInfo(ramMemory, pageSize, ramMemory / pageSize);
    userCommand_.setHardDiskInfo(numberOfHardDisks);
-   //Memory memorySystem_ = Memory(ramMemory, pageSize);
-   //Devices hardDisk_ = Devices(numberOfHardDisks);
 
-   // Memory memorySystem_;
-   // memorySystem_.setRamMemory(ramMemory);
-   // memorySystem_.setPageSize(pageSize);
-
-   //hardDisk_.setNumberOfHardDisks(numberOfHardDisks);
    cout << " Enter 'H' or 'h' for HELP \n"
         << " Enter 'Q' or 'q' to QUIT \n"
         << " Else, please enter command: \n";

@@ -18,7 +18,7 @@ public:
    CPU() {}
    ~CPU() {}
 
-   void setMemoryInfo(unsigned int ramMemory, int pageSize) { Memory_.setMemoryInfo(ramMemory, pageSize); }
+   void setMemoryInfo(unsigned int ramMemory, int pageSize, int numOfFrames) { Memory_.setMemoryInfo(ramMemory, pageSize, numOfFrames); }
    void setMemoryAddress(int memoryAddress) { Memory_.setMemoryAddress(memoryAddress); }
 
    int getCurrPID() { return currPID_; }

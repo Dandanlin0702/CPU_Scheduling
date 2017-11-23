@@ -9,7 +9,7 @@ using namespace std;
 class CommandManager {
 public:
    // System Set up
-   void setMemoryInfo(unsigned int ramMemory, int pageSize) { CPU_.setMemoryInfo(ramMemory, pageSize); }
+   void setMemoryInfo(unsigned int ramMemory, int pageSize, int numOfFrames) { CPU_.setMemoryInfo(ramMemory, pageSize, numOfFrames); }
 
    // CPU related functions
    int assignPID() { return CPU_.assignPID(); }

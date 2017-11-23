@@ -14,7 +14,7 @@ public:
    UserCommand() {}
    ~UserCommand() {}
 
-   void setMemoryInfo(unsigned int ramMemory, int pageSize);
+   void setMemoryInfo(unsigned int ramMemory, int pageSize, int numOfFrames);
    void setHardDiskInfo(int numberOfHardDisks);
 
    // Function for command A
