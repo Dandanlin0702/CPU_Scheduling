@@ -2,7 +2,7 @@ CC = g++
 LFLAGS = -std=c++11
 CFLAGS = -c -Wall
 
-SOURCES = main.cpp StartApp.cpp UserCommand.cpp Devices.cpp CPU.cpp Memory.cpp PCB.cpp
+SOURCES = main.cpp StartApp.cpp UserCommand.cpp SystemManager.cpp Devices.cpp CPU.cpp Memory.cpp PCB.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE_NAME = cpu
 

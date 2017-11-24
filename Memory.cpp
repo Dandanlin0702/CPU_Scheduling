@@ -17,23 +17,13 @@ void Memory::allocateMemoryForProcess(int PID, int priorityLevel) {
    }
 }
 
-void Memory::requestMemoryOperation(int PID) {
-   if (memoryAddress_ > ramMemory_) {
+void Memory::requestMemoryOperation(int PID, int memoryAddress) {
+   if (memoryAddress > ramMemory_) {
       cout << "The memory address you entered is not valid \n"
            << "Please enter a memory address within range: (1~) " << ramMemory_ << endl;
    } else {
-      updateFrameTable(PID, memoryAddress_ / pageSize_);
+      updateFrameTable(PID, memoryAddress / pageSize_);
    }
-   // if (frameTable_.size() == numOfFrames_) {
-   //    int rowPos = -1;
-   //    if (emptyTableSlot(rowPos)) {
-   //       placeInRowPos(rowPos, PID);
-   //    } else {
-   //       cout << "Replacing LRU process in FrameTable with current process \n";
-   //       // Caculate which page the current executing process is in
-   //       updateFrameTable(PID, memoryAddress_ / pageSize_);
-   //    }
-   // }
 }
 
 /********************************Helper Function*****************/

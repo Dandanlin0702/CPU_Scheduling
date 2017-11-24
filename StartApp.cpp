@@ -47,7 +47,7 @@ void StartApp::runApp() {
       getline (cin, userCommand);
 
       if (userCommand.size() == 0) {
-         cout << "No valid command received, please re-enter \n>>";
+         cout << "No valid command received, please re-enter \n>";
          getline (cin, userCommand);
       }
 

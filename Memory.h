@@ -17,8 +17,7 @@ public:
 	Memory() {}
    ~Memory() {}
 
-	void getMemoryInfo();
-
+	// void getMemoryInfo();
 /***************************** Setter *****************************/
 	void setMemoryInfo(unsigned int ramMemory, int pageSize, int numOfFrames) { ramMemory_ = ramMemory; pageSize_ = pageSize; numOfFrames_ = numOfFrames; }
 
@@ -34,7 +33,7 @@ public:
 	// Allocate memory for process
 	void allocateMemoryForProcess(int PID, int priorityLevel);
 	// Function for m command
-	void requestMemoryOperation(int PID);
+	void requestMemoryOperation(int PID, int memoryAddress);
 	// Release Memory for current process
 	void releaseMemory(int PID);
 	// Remove the information stored in Frame Table when a process terminates

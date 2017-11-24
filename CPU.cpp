@@ -3,20 +3,22 @@
 
 #include "CPU.h"
 
-void CPU::decideAction(int PID, int priorityLevel) {
-   if (currPriorityLevel_ < priorityLevel) {
-      // Put current executing process in ReadyQueue then execute new process
-      putInReadyQueue(currPID_, currPriorityLevel_);
-      currPID_ = PID;
-      currPriorityLevel_ = priorityLevel;
+void CPU::removeFromCPU(int& currPID, int& currPriorityLevel, string instructionType) {
+   if (instructionType != "preemptive") {
+      executeNextProcess(currPID, currPriorityLevel);
    } else {
-      putInReadyQueue(PID, priorityLevel);
+      putInReadyQueue(currPID, currPriorityLevel);
+      executeNextProcess(currPID, currPriorityLevel);
    }
 }
 
-void CPU::removeFromCPU() {
-   putInReadyQueue(currPID_, currPriorityLevel_);
-   executeNextProcess();
+void CPU::terminateTheCurrentProcess(int& currPID, int& currPriorityLevel) {
+   // The process that currently uses the CPU terminates. It leaves the system immediately
+   // Release the memory used by the current executing process
+   Memory_.releaseMemory(currPID);
+   Memory_.removeFromFrameTable(currPID);
+
+   removeFromCPU(currPID, currPriorityLevel, "terminate");
 }
 
 void CPU::putInReadyQueue(int PID, int priorityLevel) {
@@ -26,58 +28,26 @@ void CPU::putInReadyQueue(int PID, int priorityLevel) {
       queue<int> listOfProcess;
       listOfProcess.push(PID);
 
+      cout << "Testing in CPU.cpp. Process " << PID << " is being put into Ready queue, with priorityLevel of " << priorityLevel << endl;
+
       readyQueue_.insert(pair<int, queue<int>>(priorityLevel-1, listOfProcess));
    } else {
+      it = readyQueue_.find(priorityLevel-1);
+
       it->second.push(PID);
    }
 }
 
-void CPU::terminateTheCurrentProcess() {
-   // The process that currently uses the CPU terminates. It leaves the system immediately
-   // Release the memory used by the current executing process
-   Memory_.releaseMemory(currPID_);
-   Memory_.removeFromFrameTable(currPID_);
-   executeNextProcess();
-}
-
-void CPU::executeNextProcess() {
-   // Find next process with highest priorityLevel
-   it = readyQueue_.begin();
-   if (readyQueue_.empty()) {
-      currPID_ = 0;
-      currPriorityLevel_ = 0;
-
-      return;
-   } else if (!it->second.empty()){
-      currPID_ = it->second.front();
-      currPriorityLevel_ = it->first + 1;
-
-      it->second.pop();
-
-      if (it->second.empty()) {
-         readyQueue_.erase(it);
-      }
-   }
-}
-
-
-void CPU::showProcessInCPU() {
-   if (currPID_ == 0)
-      cout << "There's no process in the CPU right now. \n";
-
-   else
-      cout << "CPU: \n Process: " << currPID_ << ". Priority Level: " << currPriorityLevel_ << endl;
-}
 void CPU::showProcessInReadyQueue() {
-   // Iterate through ReadyQueue show the process
-   if (readyQueue_.empty()) {
+   it = readyQueue_.begin();
+   if (it == readyQueue_.end()) {
       cout << "Ready Queue is empty \n";
    } else {
-      it = readyQueue_.begin();
-
-      if (it->second.empty()) {
+      if (it->second.empty() || it->first == -1) {
          cout << "Ready Queue is Empty. \n";
       } else {
+         it = readyQueue_.begin();
+
          cout << "Ready Queue: \n";
          queue<int> tempQueue = it->second;
 
@@ -87,11 +57,31 @@ void CPU::showProcessInReadyQueue() {
 
                tempQueue.pop();
             }
+
+            ++it;
          }
       }
    }
+}
 
-   return;
+void CPU::executeNextProcess(int& currPID, int& currPriorityLevel) {
+   // Find next process with highest priorityLevel
+   it = readyQueue_.begin();
+   if (it == readyQueue_.end()) {
+      currPID = -1;
+      currPriorityLevel = -1;
+
+      cout << "No process in ready queue right now \n";
+   } else if (!it->second.empty()){
+      currPID = it->second.front();
+      currPriorityLevel = it->first + 1;
+
+      it->second.pop();
+
+      if (it->second.empty()) {
+         readyQueue_.erase(it);
+      }
+   }
 }
 
 #endif

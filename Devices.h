@@ -1,11 +1,10 @@
 #ifndef DEVICES_H
 #define DEVICES_H
 
+#include <queue>
 #include <vector>
 #include <iostream>
 using namespace std;
-
-#include "CPU.h"
 
 struct HardDisk {
    int PID_;
@@ -16,34 +15,22 @@ struct HardDisk {
 class Devices {
 public:
    Devices() {}
-   //Devices(int numberOfHardDisks):numberOfHardDisks_(numberOfHardDisks) {}
    ~Devices() {}
 
-   void requestDiskAccess(int diskNumber, string fileName);
+   void setHardDiskInfo(int numberOfHardDisks) { numberOfHardDisks_ = numberOfHardDisks; }
+
+   void requestDiskAccess(int PID, int diskNumber, string fileName);
    void releaseDisk(int diskNumber);
 
-/***************************** Setter *****************************/
-   void setHardDiskInfo (int numberOfHardDisks) { numberOfHardDisks_ = numberOfHardDisks; }
-
-/***************************** Getter *****************************/
-   int getNumberOfHardDisks() { return numberOfHardDisks_; }
-
-/***************************** User Input Command S *****************************/
+/************************** User Input Command S **************************/
    // Show Process
    void showProcessInHardDisk();
    // Show processes are waiting to use the hard disk
    void showProcessInWaitingQueue(int hardDiskNumber);
 
 private:
-   CPU CPU_;
-
    int numberOfHardDisks_;
    vector<queue<HardDisk*>>hardDisk_;
-
-   // Show theI/O queue for certain harddisk
-   void showIOQueue(int hardDiskNumber);
-   // Retrieve filename for process
-   void getFileName(int PID);
 };
 
 #endif

@@ -5,7 +5,7 @@
 #include <sstream>
 #include <iostream>
 
-#include "CommandManager.h"
+#include "SystemManager.h"
 
 using namespace std;
 
@@ -13,7 +13,9 @@ class UserCommand {
 public:
    UserCommand() {}
    ~UserCommand() {}
-
+   //
+   // void getMemoryInfo() { systemManager_.getMemoryInfo(); }
+   // void getDeviceInfo() { systemManager_.getDeviceInfo(); }
    void setMemoryInfo(unsigned int ramMemory, int pageSize, int numOfFrames);
    void setHardDiskInfo(int numberOfHardDisks);
 
@@ -31,7 +33,9 @@ public:
    void commandIsS(string userCommand);
 
 private:
-   CommandManager commandManager_;
+   SystemManager systemManager_;
+
+   int currPID_ = 0, currPriorityLevel_ = 0;
 
    void commandIsSR ();
    void commandIsSI ();

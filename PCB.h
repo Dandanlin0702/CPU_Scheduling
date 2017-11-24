@@ -13,7 +13,6 @@ public:
 
 private:
    int PID_ = 0;
-   string state = "ready";
 };
 
 #endif

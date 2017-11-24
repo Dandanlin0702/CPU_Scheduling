@@ -18,42 +18,31 @@ public:
    CPU() {}
    ~CPU() {}
 
-   void setMemoryInfo(unsigned int ramMemory, int pageSize, int numOfFrames) { Memory_.setMemoryInfo(ramMemory, pageSize, numOfFrames); }
-   void setMemoryAddress(int memoryAddress) { Memory_.setMemoryAddress(memoryAddress); }
+   int assignPID() { return PCB_.assignPID(); }
 
-   int getCurrPID() { return currPID_; }
+   void removeFromCPU(int& currPID, int& currPriorityLevel, string instructionType);
+   void terminateTheCurrentProcess(int& currPID, int& currPriorityLevel);
 
-   // Function to check whether the new process can preempt the current process or not
-   void decideAction(int PID, int priorityLevel);
-   // Removecurrently executing process out CPU
-   void removeFromCPU();
    // Put process with PID into ReadyQueue
    void putInReadyQueue(int PID, int priorityLevel);
-   // Terminate the current executing process
-   void terminateTheCurrentProcess();
+   // void showProcessInCPU(int currPID, int currPriorityLevel);
+   void showProcessInReadyQueue();
    // Function to find next process to execute
-   void executeNextProcess();
+   void executeNextProcess(int& currPID, int& currPriorityLevel);
 
-   // Function relate to PCB
-   int assignPID() { return PCB_.assignPID(); };
+
+   void setMemoryInfo(const long int ramMemory, int pageSize, int numOfFrames) {
+      Memory_.setMemoryInfo(ramMemory, pageSize, numOfFrames);
+   }
 
    // Functions related to Memory
    void snapshotSystem() { Memory_.snapshotSystem(); }
-   void requestMemoryOperation(int PID) { Memory_.requestMemoryOperation(PID); }
+   void requestMemoryOperation(int PID, int memoryAddress_) { Memory_.requestMemoryOperation(PID, memoryAddress_); }
    void allocateMemoryForProcess(int PID, int priorityLevel) { Memory_.allocateMemoryForProcess(PID, priorityLevel); }
-
-
-   // Functions for command 'S r', first, show the process in CPU. Then, show process in ReadyQueue
-   void showProcessInCPU();
-   void showProcessInReadyQueue();
-
 
 private:
    PCB PCB_;
    Memory Memory_;
-
-   int currPID_ = 0;
-   int currPriorityLevel_ = 0;
 
    map<int, queue<int>, std::greater<int>> readyQueue_;
    map<int, queue<int>>::iterator it;

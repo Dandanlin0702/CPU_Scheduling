@@ -1,10 +1,10 @@
 #include "UserCommand.h"
 
 void UserCommand::setMemoryInfo(unsigned int ramMemory, int pageSize, int numOfFrames) {
-   commandManager_.setMemoryInfo(ramMemory, pageSize, numOfFrames);
+   systemManager_.setMemoryInfo(ramMemory, pageSize, numOfFrames);
 }
 void UserCommand::setHardDiskInfo(int numberOfHardDisks) {
-   commandManager_.setHardDiskInfo(numberOfHardDisks);
+   systemManager_.setHardDiskInfo(numberOfHardDisks);
 }
 
 void UserCommand::commandIsA(string userCommand) {
@@ -12,18 +12,19 @@ void UserCommand::commandIsA(string userCommand) {
    ss << userCommand;
 
    char commandType;
-   int priorityLevel = 0;
-   int PID = commandManager_.assignPID();
+   // currPriorityLevel_ = 0;
+   currPID_ = systemManager_.assignPID();
 
-   ss >> commandType >> priorityLevel;
-   if (priorityLevel < 1) {
+   ss >> commandType >> currPriorityLevel_;
+   if (currPriorityLevel_ < 1) {
       cout << "ERROR \n Please enter a valid priority level. \n";
    }
 
+   systemManager_.setCurrPID(currPID_);
    // Allocate Memory for it's first page
-   commandManager_.allocateMemoryForProcess(PID, priorityLevel);
+   systemManager_.allocateMemoryForProcess(currPID_, currPriorityLevel_);
    // Decide action: put the ready queue or use CPU
-   commandManager_.decideAction(PID, priorityLevel);
+   systemManager_.decideAction(currPID_, currPriorityLevel_);
 }
 
 void UserCommand::commandIsD(string userCommand) {
@@ -34,7 +35,7 @@ void UserCommand::commandIsD(string userCommand) {
    ss << userCommand;
    ss >> commandType_ >> diskNumber_;
 
-   commandManager_.releaseDisk(diskNumber_);
+   systemManager_.releaseDisk(diskNumber_);
 }
 
 void UserCommand::commandIsd(string userCommand) {
@@ -46,11 +47,12 @@ void UserCommand::commandIsd(string userCommand) {
    ss << userCommand;
    ss >> commandType_ >> diskNumber_ >> fileName_;
 
-   commandManager_.requestDiskAccess(diskNumber_, fileName_);
+   systemManager_.requestDiskAccess(diskNumber_, fileName_);
 }
 
 void UserCommand::commandIsT() {
-   commandManager_.terminateTheCurrentProcess();
+   systemManager_.terminateTheCurrentProcess(currPID_, currPriorityLevel_);
+   return;
 }
 
 void UserCommand::commandIsM(string userCommand) {
@@ -61,10 +63,10 @@ void UserCommand::commandIsM(string userCommand) {
    ss << userCommand;
    ss >> commandType_ >> memoryAddress_;
 
-   int PID_ = commandManager_.getCurrPID();
+   int PID_ = systemManager_.getCurrPID();
 
-   commandManager_.setMemoryAddress(memoryAddress_);
-   commandManager_.requestMemoryOperation(PID_);
+   systemManager_.setMemoryAddress(memoryAddress_);
+   systemManager_.requestMemoryOperation(PID_, memoryAddress_);
 }
 
 void UserCommand::commandIsS(string userCommand) {
@@ -96,8 +98,10 @@ void UserCommand::commandIsS(string userCommand) {
    // 1. what process is currently using the cpu
    // 2. What processed are waiting in the ready-queue
 void UserCommand::commandIsSR () {
-   commandManager_.showProcessInCPU();
-   commandManager_.showProcessInReadyQueue();
+   systemManager_.showProcessInCPU();
+   systemManager_.showProcessInReadyQueue();
+
+   return;
 }
 
 // Function to show
@@ -105,10 +109,10 @@ void UserCommand::commandIsSR () {
    // 2. What processes are waiting to use the hard disk
    // For each busy hard disk show the process that uses it and show its I/O-queue. Make sure to display the filenames for each process.
 void UserCommand::commandIsSI () {
-   commandManager_.showProcessInHardDisk();
+   systemManager_.showProcessInHardDisk();
 }
 
 /***************** Memory Related Actions *************************/
 void UserCommand::commandIsSM () {
-   commandManager_.snapshotSystem();
+   systemManager_.snapshotSystem();
 }
