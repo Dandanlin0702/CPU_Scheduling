@@ -10,9 +10,6 @@ using namespace std;
 #include "PCB.h"
 #include "Memory.h"
 
-const int max = INT_MAX;
-
-
 class CPU {
 public:
    CPU() {}
@@ -23,7 +20,7 @@ public:
    void removeFromCPU(int& currPID, int& currPriorityLevel, string instructionType);
    void terminateTheCurrentProcess(int& currPID, int& currPriorityLevel);
 
-   // Put process with PID into ReadyQueue
+   // Put process with PID into RweadyQueue
    void putInReadyQueue(int PID, int priorityLevel);
    // void showProcessInCPU(int currPID, int currPriorityLevel);
    void showProcessInReadyQueue();

@@ -5,6 +5,7 @@
 
 void CPU::removeFromCPU(int& currPID, int& currPriorityLevel, string instructionType) {
    if (instructionType != "preemptive") {
+      putInReadyQueue(currPID, currPriorityLevel);
       executeNextProcess(currPID, currPriorityLevel);
    } else {
       putInReadyQueue(currPID, currPriorityLevel);
@@ -22,19 +23,23 @@ void CPU::terminateTheCurrentProcess(int& currPID, int& currPriorityLevel) {
 }
 
 void CPU::putInReadyQueue(int PID, int priorityLevel) {
-   it = readyQueue_.find(priorityLevel-1);
-
-   if (it == readyQueue_.end()) {
-      queue<int> listOfProcess;
-      listOfProcess.push(PID);
-
-      cout << "Testing in CPU.cpp. Process " << PID << " is being put into Ready queue, with priorityLevel of " << priorityLevel << endl;
-
-      readyQueue_.insert(pair<int, queue<int>>(priorityLevel-1, listOfProcess));
+   if (priorityLevel == 1) {
+      ;
    } else {
-      it = readyQueue_.find(priorityLevel-1);
+      it = readyQueue_.find(priorityLevel);
 
-      it->second.push(PID);
+      if (it == readyQueue_.end()) {
+         queue<int> listOfProcess;
+         listOfProcess.push(PID);
+
+         cout << "Testing in CPU.cpp. Process " << PID << " is being put into Ready queue, with priorityLevel of " << priorityLevel << endl;
+
+         readyQueue_.insert(pair<int, queue<int>>(priorityLevel-1, listOfProcess));
+      } else {
+         it = readyQueue_.find(priorityLevel-1);
+
+         it->second.push(PID);
+      }
    }
 }
 
