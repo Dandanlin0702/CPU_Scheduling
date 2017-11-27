@@ -4,7 +4,7 @@ void StartApp::runApp() {
    string userCommand;
 
    unsigned int ramMemory = 0;
-   int pageSize = 0, numberOfHardDisks = 0;
+   int pageSize = 0;
 
    cout << "How much RAM memory(in bytes) is there on the simulated computer? (Range from 1-4000000000) \n> ";
    cin >> ramMemory;
@@ -23,17 +23,18 @@ void StartApp::runApp() {
    }
 
    cout << "How many hard disks the simulated computer has? \n> ";
-   cin >> numberOfHardDisks;
+   cin >> numberOfHardDisks_;
 
-   while (numberOfHardDisks < 0) {
-      cout << "Youe input is invalid, please enter again\n> ";
-      cin >> numberOfHardDisks;
+   while (numberOfHardDisks_ < 0) {
+      cout << "Youe input is invalid, please enter again\n"
+           << "How many hard disks the simulated computer has?\n >";
+      cin >> numberOfHardDisks_;
    }
 
    int numOfFrames = ramMemory / pageSize;
 
    systemManager_.setMemoryInfo(ramMemory, pageSize, numOfFrames);
-   systemManager_.setHardDiskInfo(numberOfHardDisks);
+   systemManager_.setHardDiskInfo(numberOfHardDisks_);
 
    cout << " Enter 'H' or 'h' for HELP \n"
         << " Enter 'Q' or 'q' to QUIT \n"
@@ -101,11 +102,11 @@ void StartApp::commandIsA(string userCommand) {
       cout << "ERROR \n Please enter a valid priority level. \n";
    }
 
-   systemManager_.setCurrPID(currPID, currPriorityLevel);
-   // Allocate Memory for it's first page
-   systemManager_.allocateMemoryForProcess(currPID, currPriorityLevel);
+
    // Decide action: put the ready queue or use CPU
    systemManager_.decideAction(currPID, currPriorityLevel);
+   // Allocate Memory for it's first page
+   systemManager_.allocateMemoryForProcess(currPID, currPriorityLevel);
 }
 
 void StartApp::commandIsD(string userCommand) {
@@ -129,9 +130,11 @@ void StartApp::commandIsd(string userCommand) {
    ss << userCommand;
    ss >> commandType_ >> diskNumber_ >> fileName_;
 
-   if (fileName_ == "") {
+
+   if (fileName_ == "")
       cout << "Error, please specify the file name. \n";
-   }
+   if (diskNumber_ > numberOfHardDisks_)
+      cout << "Sorry you entered an invalid diskNumber, please try again \n";
 
    systemManager_.requestDiskAccess(diskNumber_, fileName_);
 }

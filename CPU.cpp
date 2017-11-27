@@ -41,8 +41,9 @@ void CPU::showProcessInReadyQueue() {
          while (it != readyQueue_.end()) {
             queue<int> tempQueue = it->second;
             while (!tempQueue.empty()) {
-               cout << " Process: " << tempQueue.front() << " Priority Level: " << it->first << endl;
-
+               if (it->first != 0 && tempQueue.front() != 0) {
+                  cout << " Process: " << tempQueue.front() << " Priority Level: " << it->first << endl;
+               }
                tempQueue.pop();
             }
 

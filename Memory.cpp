@@ -29,10 +29,12 @@ void Memory::requestMemoryOperation(int PID, int memoryAddress, int pageNumber) 
       for (int i = 0; i < frameTable_.size(); ++i) {
          if (frameTable_[i]->PID_ == PID && frameTable_[i]->pageNumber_ == pageNumber) {
             frameTable_[i]->timeStamp_ = timeStamp_;
-         } else {
-            updateFrameTable(PID, pageNumber);
+
+            return;
          }
       }
+
+      updateFrameTable(PID, pageNumber);
    }
 }
 

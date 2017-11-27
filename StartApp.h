@@ -19,6 +19,7 @@ public:
    void runApp();
 
 private:
+   int numberOfHardDisks_ = 0;
    SystemManager systemManager_;
 
    void setMemoryInfo(unsigned int ramMemory, int pageSize, int numOfFrames);
