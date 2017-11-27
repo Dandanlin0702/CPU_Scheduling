@@ -4,12 +4,13 @@ void Memory::allocateMemoryForProcess(int PID, int priorityLevel) {
    // Check if the process is the first process created, if yes, load page 0 into memory
    cout << "Testing: ram: " << ramMemory_ << " nnn " << pageSize_ << endl;
    cout << " total num of frames " << numOfFrames_ << endl;
+
    if (PID == 1) {
       FrameTable* tempTable = new FrameTable;
 
       // If current process id == 1, mean it is the very first process we created
       // So, load page #0 to frameTable #0
-      tempTable->timeStamp_ = 1;
+      tempTable->timeStamp_ = timeStamp_;
       tempTable->pageNumber_ = 0;
       tempTable->PID_ = PID;
 
@@ -17,12 +18,21 @@ void Memory::allocateMemoryForProcess(int PID, int priorityLevel) {
    }
 }
 
-void Memory::requestMemoryOperation(int PID, int memoryAddress) {
+void Memory::requestMemoryOperation(int PID, int memoryAddress, int pageNumber) {
+   timeStamp_ += 1;
+
    if (memoryAddress > ramMemory_) {
       cout << "The memory address you entered is not valid \n"
            << "Please enter a memory address within range: (1~) " << ramMemory_ << endl;
    } else {
-      updateFrameTable(PID, memoryAddress / pageSize_);
+      // Check if the pageNumber is already been used but process PID
+      for (int i = 0; i < frameTable_.size(); ++i) {
+         if (frameTable_[i]->PID_ == PID && frameTable_[i]->pageNumber_ == pageNumber) {
+            frameTable_[i]->timeStamp_ = timeStamp_;
+         } else {
+            updateFrameTable(PID, pageNumber);
+         }
+      }
    }
 }
 
@@ -38,7 +48,7 @@ void Memory::updateFrameTable(int PID, int pageNumber) {
       // First, find empty table slots
       if (emptyTableSlot(rowPos)) {
          // Place current process in the empty row
-         placeInRowPos(rowPos, PID);
+         placeInRowPos(rowPos, PID, pageNumber);
       } else {
          cout << "Replacing LRU process in FrameTable with current process \n";
          // Otherwise, replace with the LRU process
@@ -47,7 +57,6 @@ void Memory::updateFrameTable(int PID, int pageNumber) {
    } else {
       FrameTable* tempFrame = new FrameTable;
 
-      timeStamp_= timeStamp_ += 1;
       tempFrame->pageNumber_ = pageNumber;
       tempFrame->PID_ = PID;
       tempFrame->timeStamp_ = timeStamp_;
@@ -69,7 +78,7 @@ void Memory::replaceWithLRU(int PID, int pageNumber) {
       }
    }
 
-   placeInRowPos(rowPos, PID);
+   placeInRowPos(rowPos, PID, pageNumber);
 }
 
 // Show State of Memory
@@ -116,8 +125,8 @@ bool Memory::emptyTableSlot(int& rowPos) {
    return false;
 }
 
-void Memory::placeInRowPos(int rowPos, int PID) {
+void Memory::placeInRowPos(int rowPos, int PID, int pageNumber) {
    frameTable_[rowPos]->PID_ = PID;
-   frameTable_[rowPos]->timeStamp_ = timeStamp_+1;
-   frameTable_[rowPos]->pageNumber_ = memoryAddress_ / pageSize_;
+   frameTable_[rowPos]->timeStamp_ = timeStamp_;
+   frameTable_[rowPos]->pageNumber_ = pageNumber;
 }

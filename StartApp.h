@@ -6,7 +6,7 @@
 #include <iostream>
 #include <algorithm>
 
-#include "UserCommand.h"
+#include "SystemManager.h"
 
 using namespace std;
 
@@ -19,7 +19,21 @@ public:
    void runApp();
 
 private:
-   UserCommand userCommand_;
+   SystemManager systemManager_;
+
+   void setMemoryInfo(unsigned int ramMemory, int pageSize, int numOfFrames);
+   void setHardDiskInfo(int numberOfHardDisks);
+
+   // Function for command A
+   void commandIsA(string userCommand);
+   // Funtion for command D - releaseDisk
+   void commandIsD(string userCommand);
+   // Function for d command - request disk access
+   void commandIsd(string userCommand);
+   // Function to request access to a memory
+   void commandIsM(string userCommand);
+   // Function to show details of certain device
+   void commandIsS(string userCommand);
 
    // Helper functions for user to check avaiable commands
    void helpMenu();

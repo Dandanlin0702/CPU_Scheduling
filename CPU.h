@@ -17,7 +17,7 @@ public:
 
    int assignPID() { return PCB_.assignPID(); }
 
-   void removeFromCPU(int& currPID, int& currPriorityLevel, string instructionType);
+   // void removeFromCPU(int& currPID, int& currPriorityLevel, string instructionType);
    void terminateTheCurrentProcess(int& currPID, int& currPriorityLevel);
 
    // Put process with PID into RweadyQueue
@@ -34,7 +34,9 @@ public:
 
    // Functions related to Memory
    void snapshotSystem() { Memory_.snapshotSystem(); }
-   void requestMemoryOperation(int PID, int memoryAddress_) { Memory_.requestMemoryOperation(PID, memoryAddress_); }
+   void requestMemoryOperation(int PID, int memoryAddress, int pageNumber) {
+      Memory_.requestMemoryOperation(PID, memoryAddress, pageNumber);
+   }
    void allocateMemoryForProcess(int PID, int priorityLevel) { Memory_.allocateMemoryForProcess(PID, priorityLevel); }
 
 private:

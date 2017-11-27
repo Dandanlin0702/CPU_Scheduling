@@ -21,7 +21,7 @@ public:
 /***************************** Setter *****************************/
 	void setMemoryInfo(unsigned int ramMemory, int pageSize, int numOfFrames) { ramMemory_ = ramMemory; pageSize_ = pageSize; numOfFrames_ = numOfFrames; }
 
-	void setMemoryAddress(int memoryAddress) { memoryAddress_ = memoryAddress; }
+	// void setMemoryAddress(int memoryAddress) { memoryAddress_ = memoryAddress; }
 
 /***************************** Getter *****************************/
 	unsigned int getRamMemory() { return ramMemory_; }
@@ -33,7 +33,7 @@ public:
 	// Allocate memory for process
 	void allocateMemoryForProcess(int PID, int priorityLevel);
 	// Function for m command
-	void requestMemoryOperation(int PID, int memoryAddress);
+	void requestMemoryOperation(int PID, int memoryAddress, int pageNumber);
 	// Release Memory for current process
 	void releaseMemory(int PID);
 	// Remove the information stored in Frame Table when a process terminates
@@ -44,17 +44,15 @@ public:
 
 private:
 	unsigned int ramMemory_;
-	int pageSize_;
-
-	int timeStamp_ = 1;
-	int memoryAddress_ = 0, pageNumber_ = 0, numOfFrames_ = 0;
+	// int memoryAddress_ = 0;
+	int pageSize_, timeStamp_ = 1, numOfFrames_ = 0;
 
 	vector<FrameTable*> frameTable_;
 
 	bool isTableFull = false;
 
 	bool emptyTableSlot(int& rowPos);
-	void placeInRowPos(int rowPos, int PID);
+	void placeInRowPos(int rowPos, int PID, int pageNumber);
 
 	void updateFrameTable(int PID, int pageNumber);
 	void replaceWithLRU(int PID, int pageNumber);

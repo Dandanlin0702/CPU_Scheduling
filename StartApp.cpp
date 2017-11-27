@@ -1,6 +1,3 @@
-#ifndef STARTAPP_CPP
-#define STARTAPP_CPP
-
 #include "StartApp.h"
 
 void StartApp::runApp() {
@@ -33,15 +30,16 @@ void StartApp::runApp() {
       cin >> numberOfHardDisks;
    }
 
-   userCommand_.setMemoryInfo(ramMemory, pageSize, ramMemory / pageSize);
-   userCommand_.setHardDiskInfo(numberOfHardDisks);
+   int numOfFrames = ramMemory / pageSize;
+
+   systemManager_.setMemoryInfo(ramMemory, pageSize, numOfFrames);
+   systemManager_.setHardDiskInfo(numberOfHardDisks);
 
    cout << " Enter 'H' or 'h' for HELP \n"
         << " Enter 'Q' or 'q' to QUIT \n"
         << " Else, please enter command: \n";
 
    getline (cin, userCommand);
-   // While loop keeps reading user's input
    do {
       cout << "> ";
       getline (cin, userCommand);
@@ -54,7 +52,7 @@ void StartApp::runApp() {
       switch (userCommand.at(0)) {
          case 'Q':
          case 'q':
-            cout << "Program terminatting";
+            cout << "Program terminatting .\n";
             exit(0);
             break;
          case 'H':
@@ -62,22 +60,22 @@ void StartApp::runApp() {
             helpMenu();
             break;
          case 'A':
-            userCommand_.commandIsA(userCommand);
+            commandIsA(userCommand);
             break;
          case 'D':
-            userCommand_.commandIsD(userCommand);
+            commandIsD(userCommand);
             break;
          case 'd':
-            userCommand_.commandIsd(userCommand);
+            commandIsd(userCommand);
             break;
          case 't':
-            userCommand_.commandIsT();
+            systemManager_.terminateTheCurrentProcess();
             break;
          case 'm':
-            userCommand_.commandIsM(userCommand);
+            commandIsM(userCommand);
             break;
          case 'S':
-            userCommand_.commandIsS(userCommand);
+            commandIsS(userCommand);
             break;
          default:
             cout << "Unknown user command (" << userCommand << ") invoked. \n"
@@ -88,6 +86,90 @@ void StartApp::runApp() {
       cout << "\n";
    } while (true);
 }
+
+void StartApp::commandIsA(string userCommand) {
+   stringstream ss;
+   ss << userCommand;
+
+   char commandType;
+   int currPriorityLevel;
+
+   int currPID = systemManager_.assignPID();
+
+   ss >> commandType >> currPriorityLevel;
+   if (currPriorityLevel < 1) {
+      cout << "ERROR \n Please enter a valid priority level. \n";
+   }
+
+   systemManager_.setCurrPID(currPID, currPriorityLevel);
+   // Allocate Memory for it's first page
+   systemManager_.allocateMemoryForProcess(currPID, currPriorityLevel);
+   // Decide action: put the ready queue or use CPU
+   systemManager_.decideAction(currPID, currPriorityLevel);
+}
+
+void StartApp::commandIsD(string userCommand) {
+   stringstream ss;
+   int diskNumber_;
+   char commandType_;
+
+   ss << userCommand;
+   ss >> commandType_ >> diskNumber_;
+
+   systemManager_.releaseDisk(diskNumber_);
+}
+
+void StartApp::commandIsd(string userCommand) {
+   stringstream ss;
+
+   char commandType_;
+   int diskNumber_;
+   string fileName_;
+
+   ss << userCommand;
+   ss >> commandType_ >> diskNumber_ >> fileName_;
+
+   if (fileName_ == "") {
+      cout << "Error, please specify the file name. \n";
+   }
+
+   systemManager_.requestDiskAccess(diskNumber_, fileName_);
+}
+
+void StartApp::commandIsM(string userCommand) {
+   stringstream ss;
+   char commandType_;
+   int memoryAddress_;
+
+   ss << userCommand;
+   ss >> commandType_ >> memoryAddress_;
+
+   systemManager_.requestMemoryOperation(memoryAddress_);
+}
+
+void StartApp::commandIsS(string userCommand) {
+   stringstream ss;
+   char commandType_, commandDetail_;
+
+   ss << userCommand;
+   ss >> commandType_ >> commandDetail_;
+
+   // Check is the command is S r
+   if (commandDetail_ == 'r') {
+      // When command is S r call commandSR() function
+      systemManager_.showProcessInCPU();
+      // systemManager_.showProcessInReadyQueue();
+   } else if (commandDetail_ == 'i') {
+      // When command is S i
+      systemManager_.showProcessInHardDisk();
+   } else if (commandDetail_ == 'm') {
+      // When command is S m
+      systemManager_.snapshotSystem();
+   } else {
+      cout << "Sorry you entered an unknown command or your command is not correctly formatted\n Please enter again.\n";
+   }
+}
+
 
 void StartApp::helpMenu () {
    stringstream ss;
@@ -117,5 +199,3 @@ void StartApp::helpMenu () {
 
    cout << ss.str();
 }
-
-#endif

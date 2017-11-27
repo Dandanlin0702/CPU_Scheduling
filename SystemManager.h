@@ -12,11 +12,8 @@ public:
 
    // Setter
    void setMemoryInfo(unsigned int ramMemory, int pageSize, int numOfFrames);
-   void setMemoryAddress(int memoryAddress);
-
-   void setCurrPID(int PID) { currPID_ = PID; }
    int assignPID() { return CPU_.assignPID(); }
-
+   void setCurrPID(int PID, int priorityLevel) { currPID_ = PID; currPriorityLevel_ = priorityLevel; }
 
    // Getter
    int getCurrPID() { return currPID_; }
@@ -25,19 +22,14 @@ public:
 
 
    void decideAction(int PID, int priorityLevel);
-   void terminateTheCurrentProcess(int& currPID, int& currPriorityLevel);
+   void terminateTheCurrentProcess();
    void putInReadyQueue(int PID, int priorityLevel);
    void showProcessInCPU();
-   void showProcessInReadyQueue();
+   // void showProcessInReadyQueue();
 
    void snapshotSystem() { CPU_.snapshotSystem(); }
-   void requestMemoryOperation(int PID, int memoryAddress_) { CPU_.requestMemoryOperation(PID, memoryAddress_); }
+   void requestMemoryOperation(int memoryAddress);
    void allocateMemoryForProcess(int PID, int priorityLevel) { CPU_.allocateMemoryForProcess(PID, priorityLevel); }
-
-   void removeFromCPU(int& currPID, int& currPriorityLevel) {
-      CPU_.removeFromCPU(currPID, currPriorityLevel, "preemptive");
-   }
-
 
    // void getDeviceInfo() { Devices_.getDeviceInfo(); }
    void setHardDiskInfo(int numberOfHardDisks) { Devices_.setHardDiskInfo(numberOfHardDisks); }
@@ -56,7 +48,9 @@ private:
    unsigned int ramMemory_;
 
 	int pageSize_;
-	int memoryAddress_ = 0, pageNumber_ = 0, numOfFrames_ = 0;
+	int pageNumber_ = 0, numOfFrames_ = 0;
+
+   // int memoryAddress_ = 0;
 };
 
 #endif

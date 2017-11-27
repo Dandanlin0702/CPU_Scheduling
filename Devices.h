@@ -4,6 +4,8 @@
 #include <queue>
 #include <vector>
 #include <iostream>
+#include <unordered_map>
+
 using namespace std;
 
 struct HardDisk {
@@ -14,8 +16,8 @@ struct HardDisk {
 
 class Devices {
 public:
-   Devices() {}
-   ~Devices() {}
+   // Devices() {}
+   // ~Devices() {}
 
    void setHardDiskInfo(int numberOfHardDisks) { numberOfHardDisks_ = numberOfHardDisks; }
 
@@ -26,11 +28,13 @@ public:
    // Show Process
    void showProcessInHardDisk();
    // Show processes are waiting to use the hard disk
-   void showProcessInWaitingQueue(int hardDiskNumber);
+   void showProcessInWaitingQueue(unordered_map<int, queue<HardDisk*>>::iterator it);
 
 private:
    int numberOfHardDisks_;
-   vector<queue<HardDisk*>>hardDisk_;
+
+   unordered_map<int, queue<HardDisk*>>hardDiskQueue_;
+   unordered_map<int, queue<HardDisk*>>::iterator it;
 };
 
 #endif
