@@ -38,12 +38,8 @@ void Memory::requestMemoryOperation(int PID, int memoryAddress, int pageNumber) 
    }
 }
 
-/********************************Helper Function*****************/
+/******************************** Helper Functions ****************************/
 void Memory::updateFrameTable(int PID, int pageNumber) {
-   // Check if memory if full or not, if yes, remove LRU process
-   cout << " Testing: curr frametable size is: " << frameTable_.size()
-        << "\nTesting: curr numOfFrames_ is: " <<numOfFrames_ << endl;
-
    if (isTableFull) {
       // When frame table is full
       int rowPos = -1;

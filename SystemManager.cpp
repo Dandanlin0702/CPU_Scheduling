@@ -3,20 +3,14 @@
 void SystemManager::setMemoryInfo(unsigned int ramMemory, int pageSize, int numOfFrames) {
    ramMemory_ = ramMemory;
    pageSize_ = pageSize;
-   numOfFrames_ = ramMemory / pageSize;
 
-   CPU_.setMemoryInfo(ramMemory, pageSize, numOfFrames_);
-}
-
-void SystemManager::requestMemoryOperation(int memoryAddress) {
-   pageNumber_ = memoryAddress/pageSize_;
-   CPU_.requestMemoryOperation(currPID_, memoryAddress, pageNumber_);
+   CPU_.setMemoryInfo(ramMemory, pageSize, ramMemory / pageSize);
 }
 
 void SystemManager::decideAction(int PID, int priorityLevel) {
    if (currPriorityLevel_ < priorityLevel) {
       // Put current executing process in ReadyQueue then execute new process
-      cout << "new process coming in current process info:  " << currPID_ << " priorityLevel " << currPriorityLevel_ << endl;
+      // cout << "new process coming in current process info:  " << currPID_ << " priorityLevel " << currPriorityLevel_ << endl;
       CPU_.putInReadyQueue(currPID_, currPriorityLevel_);
       // Update current executing process' info
       currPID_ = PID;
@@ -49,7 +43,5 @@ void SystemManager::showProcessInCPU() {
 
 void SystemManager::requestDiskAccess(int diskNumber, string fileName) {
    Devices_.requestDiskAccess(currPID_, diskNumber, fileName);
-
-   //CPU_.putInReadyQueue(currPID_, currPriorityLevel_);
    CPU_.executeNextProcess(currPID_, currPriorityLevel_);
 }

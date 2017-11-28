@@ -6,7 +6,7 @@ void StartApp::runApp() {
    unsigned int ramMemory = 0;
    int pageSize = 0;
 
-   cout << "How much RAM memory(in bytes) is there on the simulated computer? (Range from 1-4000000000) \n> ";
+   cout << "How much RAM memory(in bytes) is there on the simulated computer? (Range from 1-4 billion) \n> ";
    cin >> ramMemory;
 
    while (ramMemory > 4000000000 || ramMemory <= 0) {
@@ -102,10 +102,7 @@ void StartApp::commandIsA(string userCommand) {
       cout << "ERROR \n Please enter a valid priority level. \n";
    }
 
-
-   // Decide action: put the ready queue or use CPU
    systemManager_.decideAction(currPID, currPriorityLevel);
-   // Allocate Memory for it's first page
    systemManager_.allocateMemoryForProcess(currPID, currPriorityLevel);
 }
 
@@ -130,7 +127,7 @@ void StartApp::commandIsd(string userCommand) {
    ss << userCommand;
    ss >> commandType_ >> diskNumber_ >> fileName_;
 
-
+   // Prompt ERROR message if user didn't provide correct inputs
    if (fileName_ == "")
       cout << "Error, please specify the file name. \n";
    if (diskNumber_ > numberOfHardDisks_)
@@ -157,16 +154,11 @@ void StartApp::commandIsS(string userCommand) {
    ss << userCommand;
    ss >> commandType_ >> commandDetail_;
 
-   // Check is the command is S r
    if (commandDetail_ == 'r') {
-      // When command is S r call commandSR() function
       systemManager_.showProcessInCPU();
-      // systemManager_.showProcessInReadyQueue();
    } else if (commandDetail_ == 'i') {
-      // When command is S i
       systemManager_.showProcessInHardDisk();
    } else if (commandDetail_ == 'm') {
-      // When command is S m
       systemManager_.snapshotSystem();
    } else {
       cout << "Sorry you entered an unknown command or your command is not correctly formatted\n Please enter again.\n";
@@ -182,9 +174,9 @@ void StartApp::helpMenu () {
 
       // Interrupts:
       << "2. Create a new process:\n"
-         << "\t\"A <priority level>\"\n"
+         << "\t\"A <priority_level>\"\n"
       << "3. Release hard disk:\n"
-         << "\t\"D <hard disk number>\"\n"
+         << "\t\"D <hard_disk_number>\"\n"
       << "4. Show process is currently using CPU and processes are waiting for ready-queue:\n"
          << "\t\"S r\"\n"
       << "5. Show process is currently using Hard Disk and processes are waiting to use Hard Disk:\n"
@@ -196,9 +188,9 @@ void StartApp::helpMenu () {
       << "7. Terminate process that currently uses the CPU:\n"
          << "\t\"t\"\n"
       << "8. Request a hard disk & read/write file:\n"
-         << "\t\"d <hard disk number> <file_name>\"\n"
+         << "\t\"d <hard_disk_number> <file_name>\"\n"
       << "9. Request a memory operation:\n"
-         << "\t\"m <memory address>\"\n";
+         << "\t\"m <memory_address>\"\n";
 
    cout << ss.str();
 }

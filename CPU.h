@@ -17,17 +17,19 @@ public:
 
    int assignPID() { return PCB_.assignPID(); }
 
-   // void removeFromCPU(int& currPID, int& currPriorityLevel, string instructionType);
+   // Function to terminate current executing process
    void terminateTheCurrentProcess(int& currPID, int& currPriorityLevel);
 
-   // Put process with PID into RweadyQueue
+   // Functiosn for:
+   //    1. Put process with PID into ReadyQueue
+   //    2. Show process in ready queue
    void putInReadyQueue(int PID, int priorityLevel);
-   // void showProcessInCPU(int currPID, int currPriorityLevel);
    void showProcessInReadyQueue();
+
    // Function to find next process to execute
    void executeNextProcess(int& currPID, int& currPriorityLevel);
 
-
+   // Function for setting up memory system
    void setMemoryInfo(const long int ramMemory, int pageSize, int numOfFrames) {
       Memory_.setMemoryInfo(ramMemory, pageSize, numOfFrames);
    }

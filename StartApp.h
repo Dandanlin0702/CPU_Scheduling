@@ -25,7 +25,7 @@ private:
    void setMemoryInfo(unsigned int ramMemory, int pageSize, int numOfFrames);
    void setHardDiskInfo(int numberOfHardDisks);
 
-   // Function for command A
+   // Function for command A - Create new process
    void commandIsA(string userCommand);
    // Funtion for command D - releaseDisk
    void commandIsD(string userCommand);

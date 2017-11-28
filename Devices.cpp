@@ -27,8 +27,8 @@ void Devices::releaseDisk(int diskNumber) {
 
       if (!it->second.empty()) {
          cout << "Released Hard Disk #" << diskNumber
-              << ".\nCurrent process using harddisk " << diskNumber << " is: \n\tProcess "
-              << it->second.front()->PID_ << " is using the hard disk " << diskNumber << endl;
+              << ".\nCurrent process using hard disk " << diskNumber << " is: \n\tProcess "
+              << it->second.front()->PID_ << endl;
       } else {
          cout << "There's no process waiting to use hard disk #" << diskNumber << endl;
       }
@@ -49,7 +49,7 @@ void Devices::showProcessInHardDisk() {
          } else {
             cout << "In Hard Disk #" << it->first
                  << ": \n\tProcess: " << it->second.front()->PID_
-                 << ": \n\tFile: " << it->second.front()->fileName_
+                 << " \n\tFile: " << it->second.front()->fileName_
                  << endl;
 
             it->second.pop();
@@ -59,7 +59,7 @@ void Devices::showProcessInHardDisk() {
             } else {
                while (!it->second.empty()) {
                   if (it->second.front()->isOccupied_ == true) {
-                     cout << "Hard Disk " << it->first << ": \n\tProcess " << it->second.front()->PID_ << ". Filename: " << it->second.front()->fileName_ << endl;
+                     cout << "Waiting for Hard Disk #" << it->first << ": \n\tProcess " << it->second.front()->PID_ << " \n\tFilename: " << it->second.front()->fileName_ << endl;
                   }
 
                   it->second.pop();

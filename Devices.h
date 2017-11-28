@@ -16,25 +16,29 @@ struct HardDisk {
 
 class Devices {
 public:
-   // Devices() {}
-   // ~Devices() {}
+   Devices() {}
+   ~Devices() {}
 
+   // Set up hard disk info
    void setHardDiskInfo(int numberOfHardDisks) { numberOfHardDisks_ = numberOfHardDisks; }
 
+   // Functions:
+   //    1. Request disk access
+   //    2. Release a hard disk
    void requestDiskAccess(int PID, int diskNumber, string fileName);
    void releaseDisk(int diskNumber);
 
-/************************** User Input Command S **************************/
-   // Show Process
+   // Show Process in Hard Disk
    void showProcessInHardDisk();
-   // Show processes are waiting to use the hard disk
-   void showProcessInWaitingQueue(unordered_map<int, queue<HardDisk*>>::iterator it);
 
 private:
    int numberOfHardDisks_;
 
    unordered_map<int, queue<HardDisk*>>hardDiskQueue_;
    unordered_map<int, queue<HardDisk*>>::iterator it;
+
+   // Show processes are waiting to use the hard disk
+   void showProcessInWaitingQueue(unordered_map<int, queue<HardDisk*>>::iterator it);
 };
 
 #endif

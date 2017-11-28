@@ -34,8 +34,7 @@ void CPU::showProcessInReadyQueue() {
          cout << "Ready Queue is Empty. \n";
       } else {
          it = readyQueue_.begin();
-         // Remove first process that is currently executing in CPU
-         // it->second.pop();
+
          cout << "Ready Queue: \n";
 
          while (it != readyQueue_.end()) {

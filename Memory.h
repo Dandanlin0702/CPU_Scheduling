@@ -17,11 +17,8 @@ public:
 	Memory() {}
    ~Memory() {}
 
-	// void getMemoryInfo();
 /***************************** Setter *****************************/
 	void setMemoryInfo(unsigned int ramMemory, int pageSize, int numOfFrames) { ramMemory_ = ramMemory; pageSize_ = pageSize; numOfFrames_ = numOfFrames; }
-
-	// void setMemoryAddress(int memoryAddress) { memoryAddress_ = memoryAddress; }
 
 /***************************** Getter *****************************/
 	unsigned int getRamMemory() { return ramMemory_; }
@@ -51,6 +48,11 @@ private:
 
 	bool isTableFull = false;
 
+	// Helper functions:
+	//		1. Find empty slots in Frame table
+	//		2. Place process in a certain position in frameTable
+	// 	3. Update frame table
+	// 	4. Replace current process with LRU process in frame table
 	bool emptyTableSlot(int& rowPos);
 	void placeInRowPos(int rowPos, int PID, int pageNumber);
 
