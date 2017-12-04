@@ -45,7 +45,7 @@ public:
    //    3. For command 'd', request disk access
    //    4. Shwo Processes in Hard Disk
    void setHardDiskInfo(int numberOfHardDisks) { Devices_.setHardDiskInfo(numberOfHardDisks); }
-   void releaseDisk(int diskNumber) { Devices_.releaseDisk(diskNumber); }
+   void releaseDisk(int diskNumber);
    void requestDiskAccess(int diskNumber, string fileName);
    void showProcessInHardDisk() { Devices_.showProcessInHardDisk(); }
 

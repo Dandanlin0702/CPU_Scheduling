@@ -10,6 +10,8 @@ using namespace std;
 
 struct HardDisk {
    int PID_;
+   int priorityLevel_;
+
    string fileName_;
    bool isOccupied_ = false;
 };
@@ -25,8 +27,8 @@ public:
    // Functions:
    //    1. Request disk access
    //    2. Release a hard disk
-   void requestDiskAccess(int PID, int diskNumber, string fileName);
-   void releaseDisk(int diskNumber);
+   void requestDiskAccess(int PID, int priorityLevel, int diskNumber, string fileName);
+   void releaseDisk(int diskNumber, int& PID, int& priorityLevel);
 
    // Show Process in Hard Disk
    void showProcessInHardDisk();

@@ -42,6 +42,12 @@ void SystemManager::showProcessInCPU() {
 }
 
 void SystemManager::requestDiskAccess(int diskNumber, string fileName) {
-   Devices_.requestDiskAccess(currPID_, diskNumber, fileName);
+   Devices_.requestDiskAccess(currPID_, currPriorityLevel_, diskNumber, fileName);
    CPU_.executeNextProcess(currPID_, currPriorityLevel_);
+}
+
+void SystemManager::releaseDisk(int diskNumber) {
+   int PID, priorityLevel;
+   Devices_.releaseDisk(diskNumber, PID, priorityLevel);
+   decideAction(PID, priorityLevel);
 }

@@ -100,10 +100,10 @@ void StartApp::commandIsA(string userCommand) {
    ss >> commandType >> currPriorityLevel;
    if (currPriorityLevel < 1) {
       cout << "ERROR \n Please enter a valid priority level. \n";
+   } else {
+      systemManager_.decideAction(currPID, currPriorityLevel);
+      systemManager_.allocateMemoryForProcess(currPID, currPriorityLevel);
    }
-
-   systemManager_.decideAction(currPID, currPriorityLevel);
-   systemManager_.allocateMemoryForProcess(currPID, currPriorityLevel);
 }
 
 void StartApp::commandIsD(string userCommand) {
@@ -130,10 +130,10 @@ void StartApp::commandIsd(string userCommand) {
    // Prompt ERROR message if user didn't provide correct inputs
    if (fileName_ == "")
       cout << "Error, please specify the file name. \n";
-   if (diskNumber_ > numberOfHardDisks_)
+   else if (diskNumber_ > numberOfHardDisks_ || diskNumber_ < 0)
       cout << "Sorry you entered an invalid diskNumber, please try again \n";
-
-   systemManager_.requestDiskAccess(diskNumber_, fileName_);
+   else
+      systemManager_.requestDiskAccess(diskNumber_, fileName_);
 }
 
 void StartApp::commandIsM(string userCommand) {
