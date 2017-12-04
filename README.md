@@ -14,7 +14,7 @@ This term project is implemented by Dandan Lin for CSCI 340 (Operating System).
 
 ##Testing
 
-Following are the commands you may use: '''
+Following are the commands you may use:
 
 ```
   1\. Q or q
@@ -43,8 +43,6 @@ Following are the commands you may use: '''
      Request a memory operation
      Ex: m 16 - Current executing process requesting access to memoryaddress 16
 ```
-
-'''
 
 #!Important
 
