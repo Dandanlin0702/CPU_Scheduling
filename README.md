@@ -1,10 +1,10 @@
-# CPU Simulator
+## CPU Simulator
    This term project is implemented by Dandan Lin for CSCI 340 (Operating System).
 
    This program uses preemptive priority scheduling.
    All I/O queues are FCFS.
 
-# Getting Started
+## Getting Started
 ## Compilation
 ```
    $ make
@@ -49,10 +49,10 @@
      Example: m 16 - Current executing process requesting access to memoryaddress 16
 ```
 
-# !Important
+## !Important
    Note: All the commands are strictly formatted
 
-# Project including following:
+## Project including following:
    **Header File:**<br />
    CPU.h PCB.h Memory.h Devices.h StartApp.h SystemManager.h
 
@@ -66,14 +66,14 @@
    **Documentations:**<br />
    README.md
 
-# Language Used
+## Language Used
    C++
 
-# Data Structure Used
-   Vector
-   Linked List
-   Unordered Map
-   Priority Queue
+## Data Structure Used
+   Vector <br />
+   Linked List <br />
+   Unordered Map <br />
+   Priority Queue <br />
 
-# Authors
-   Dandan Lin @November 2017
+## Authors
+   Dandan Lin @December 4th, 2017

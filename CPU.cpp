@@ -13,8 +13,6 @@ void CPU::putInReadyQueue(int PID, int priorityLevel) {
    if (it == readyQueue_.end()) {
       queue<int> listOfProcess;
       listOfProcess.push(PID);
-      // Testing
-      // cout << "Testing in CPU.cpp. Process " << PID << " is being put into Ready queue, with priorityLevel of " << priorityLevel << endl;
 
       readyQueue_.insert(pair<int, queue<int>>(priorityLevel, listOfProcess));
    } else {

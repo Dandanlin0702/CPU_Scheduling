@@ -85,8 +85,8 @@ void Memory::snapshotSystem() {
    }
 }
 
-void Memory::releaseMemory(int PID) {
-}
+// void Memory::releaseMemory(int PID) {
+// }
 
 void Memory::removeFromFrameTable(int PID) {
    if (frameTable_.size() != 0) {
@@ -104,18 +104,18 @@ void Memory::removeFromFrameTable(int PID) {
 }
 
 bool Memory::emptyTableSlot(int& rowPos) {
-        cout << "Looking for empty slots in frame table \n";
-        for (int i = 0; i < frameTable_.size(); ++i) {
-                if (frameTable_[i]->PID_ == -1) {
-                        return true;
-                }
-        }
+   cout << "Looking for empty slots in frame table \n";
+   for (int i = 0; i < frameTable_.size(); ++i) {
+      if (frameTable_[i]->PID_ == -1) {
+         return true;
+      }
+   }
 
-        return false;
+   return false;
 }
 
 void Memory::placeInRowPos(int rowPos, int PID, int pageNumber) {
-        frameTable_[rowPos]->PID_ = PID;
-        frameTable_[rowPos]->timeStamp_ = timeStamp_;
-        frameTable_[rowPos]->pageNumber_ = pageNumber;
+   frameTable_[rowPos]->PID_ = PID;
+   frameTable_[rowPos]->timeStamp_ = timeStamp_;
+   frameTable_[rowPos]->pageNumber_ = pageNumber;
 }

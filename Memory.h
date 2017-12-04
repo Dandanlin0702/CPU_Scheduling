@@ -31,8 +31,8 @@ public:
 	void allocateMemoryForProcess(int PID, int priorityLevel);
 	// Function for m command
 	void requestMemoryOperation(int PID, int memoryAddress, int pageNumber);
-	// Release Memory for current process
-	void releaseMemory(int PID);
+	// // Release Memory for current process
+	// void releaseMemory(int PID);
 	// Remove the information stored in Frame Table when a process terminates
 	void removeFromFrameTable(int PID);
 

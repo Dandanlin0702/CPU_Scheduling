@@ -2,6 +2,7 @@
 
 void Devices::requestDiskAccess(int PID, int priorityLevel, int diskNumber, string fileName) {
    HardDisk* tempHardDisk = new HardDisk;
+
    tempHardDisk->PID_ = PID;
    tempHardDisk->priorityLevel_ = priorityLevel;
    tempHardDisk->fileName_ = fileName;
@@ -22,21 +23,19 @@ void Devices::releaseDisk(int diskNumber, int& PID, int& priorityLevel) {
    it = hardDiskQueue_.find(diskNumber);
 
    if (it == hardDiskQueue_.end()) {
-          cout << "Oops, there's no processes are using the hard disk " << diskNumber << ". \n";
+      cout << "Oops, there's no processes are using the hard disk " << diskNumber << ". \n";
    } else {
-       // Put process back to either Ready Queue or CPU
-       PID = it->second.front()->PID_;
-       priorityLevel = it->second.front()->priorityLevel_;
+      // Put process back to either Ready Queue or CPU
+      PID = it->second.front()->PID_;
+      priorityLevel = it->second.front()->priorityLevel_;
 
-       it->second.pop();
+      it->second.pop();
 
-       if (!it->second.empty()) {
+      if (!it->second.empty()) {
          cout << "Released Hard Disk #" << diskNumber << endl;
-              //    // << ".\nCurrent process using hard disk " << diskNumber << " is: \n\tProcess "
-              // << it->second.front()->PID_ << endl;
-       } else {
-            cout << "There's no process waiting to use hard disk #" << diskNumber << endl;
-       }
+      } else {
+         cout << "There's no process waiting to use hard disk #" << diskNumber << endl;
+      }
    }
 }
 
@@ -62,8 +61,6 @@ void Devices::showProcessInHardDisk() {
             cout << "|            " << it->first << "                "
                  << it->second.front()->PID_ << "           "
                  << it->second.front()->fileName_ << "         |\n"
-                 // << ": \n\tProcess: " << it->second.front()->PID_
-                 // << " \n\tFile: " << it->second.front()->fileName_
                  << "--------------------------------------------------------\n";
 
             it->second.pop();
@@ -82,12 +79,7 @@ void Devices::showProcessInHardDisk() {
                   cout << "|            " << it->first << "                "
                        << it->second.front()->PID_ << "           "
                        << it->second.front()->fileName_ << "        |\n"
-                      // << ": \n\tProcess: " << it->second.front()->PID_
-                      // << " \n\tFile: " << it->second.front()->fileName_
                        << "--------------------------------------------------------\n";
-                  //
-                  //    cout << "Waiting for Hard Disk #" << it->first << ": \n\tProcess " << it->second.front()->PID_ << " \n\tFilename: " << it->second.front()->fileName_ << endl;
-                  // }
                   }
                   it->second.pop();
                }
