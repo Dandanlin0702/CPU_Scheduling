@@ -19,26 +19,34 @@
 ```
   1. Q or q
      Exit
+     
   2. A <priority_level>
      Create a new process with priority of priorityLevel
-     Ex: A 5 - Create a new process with priorityLevel of 5
+     Example: A 5 - Create a new process with priorityLevel of 5
+
   3. D <hard_disk_number>
      Release a certain hard disk
-     Ex: D 2 - Release hard disk 2
+     Example: D 2 - Release hard disk 2
+
   4. S r
      Show process is currently using CPU and processes are waiting for ready-queue
+
   5. S i
      Show process is currently using Hard Disk and processes are waiting to use Hard Disk
+
   6. S m
      Show memory state
+
   7. t
      Terminate process that currently uses the CPU
+
   8. d <hard_disk_number> <file_name>
      Request a hard disk & read/write file
-     Ex: d 2 testing - Current executing process is requesting access to hard disk 2 and wants to read/write testing file
+     Example: d 2 testing - Current executing process is requesting access to hard disk 2 and wants to read/write testing file
+
   9. m <memory_address>
      Request a memory operation
-     Ex: m 16 - Current executing process requesting access to memoryaddress 16
+     Example: m 16 - Current executing process requesting access to memoryaddress 16
 ```
 
 # !Important
