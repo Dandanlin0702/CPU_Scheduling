@@ -17,34 +17,37 @@
    Following are the commands you may use to test this program:
 
 ```
-  1. Q or q
+  1. H or h
+     Show Help Menu
+
+  2. Q or q
      Exit
 
-  2. A <priority_level>
+  3. A <priority_level>
      Create a new process with priority of priorityLevel
      Example: A 5 - Create a new process with priorityLevel of 5
 
-  3. D <hard_disk_number>
+  4. D <hard_disk_number>
      Release a certain hard disk
      Example: D 2 - Release hard disk 2
 
-  4. S r
+  5. S r
      Show process is currently using CPU and processes are waiting for ready-queue
 
-  5. S i
+  6. S i
      Show process is currently using Hard Disk and processes are waiting to use Hard Disk
 
-  6. S m
+  7. S m
      Show memory state
 
-  7. t
+  8. t
      Terminate process that currently uses the CPU
 
-  8. d <hard_disk_number> <file_name>
+  9. d <hard_disk_number> <file_name>
      Request a hard disk & read/write file
      Example: d 2 testing - Current executing process is requesting access to hard disk 2 and wants to read/write testing file
 
-  9. m <memory_address>
+  10. m <memory_address>
      Request a memory operation
      Example: m 16 - Current executing process requesting access to memoryaddress 16
 ```
