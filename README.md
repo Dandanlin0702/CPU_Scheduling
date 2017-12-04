@@ -19,7 +19,7 @@
 ```
   1. Q or q
      Exit
-     
+
   2. A <priority_level>
      Create a new process with priority of priorityLevel
      Example: A 5 - Create a new process with priorityLevel of 5
@@ -53,17 +53,17 @@
    Note: All the commands are strictly formatted
 
 # Project including following:
-   **Header File:**
+   **Header File:**<br />
    CPU.h PCB.h Memory.h Devices.h StartApp.h SystemManager.h
 
-   **CPP File:**
+   **CPP File:**<br />
    main.cpp CPU.cpp PCB.cpp Memory.cpp<br>
    Devices.cpp StartApp.cpp SystemManager.cpp
 
-   **Compilation File:**
+   **Compilation File:**<br />
    makefile
 
-   **Documentations:**
+   **Documentations:**<br />
    README.md
 
 # Language Used
