@@ -47,8 +47,8 @@ void Memory::updateFrameTable(int PID, int pageNumber) {
       tempFrame->timeStamp_ = timeStamp_;
 
       frameTable_.push_back(tempFrame);
-
-      if (frameTable_.size() == numOfFrames_) {
+      int frameTableSize = frameTable_.size();
+      if ( frameTableSize == numOfFrames_) {
          isTableFull = true;
       }
    }
