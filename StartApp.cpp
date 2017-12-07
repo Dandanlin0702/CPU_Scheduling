@@ -3,7 +3,7 @@
 void StartApp::runApp() {
    string userCommand;
 
-   unsigned int ramMemory = 0;
+   long int ramMemory = 0;
    int pageSize = 0;
 
    cout << "How much RAM memory(in bytes) is there on the simulated computer? (Range from 1-4 billion) \n> ";

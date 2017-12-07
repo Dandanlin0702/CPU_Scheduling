@@ -18,10 +18,10 @@ public:
    ~Memory() {}
 
 /***************************** Setter *****************************/
-	void setMemoryInfo(unsigned int ramMemory, int pageSize, int numOfFrames) { ramMemory_ = ramMemory; pageSize_ = pageSize; numOfFrames_ = numOfFrames; }
+	void setMemoryInfo(long int ramMemory, int pageSize, int numOfFrames) { ramMemory_ = ramMemory; pageSize_ = pageSize; numOfFrames_ = numOfFrames; }
 
 /***************************** Getter *****************************/
-	unsigned int getRamMemory() { return ramMemory_; }
+	long int getRamMemory() { return ramMemory_; }
 	int getPageSize() { return pageSize_; }
 
 /***************************** Regular *****************************/
@@ -40,7 +40,7 @@ public:
 	void snapshotSystem();
 
 private:
-	unsigned int ramMemory_;
+	long int ramMemory_;
 	int pageSize_, timeStamp_ = 0, numOfFrames_ = 0;
 
 	vector<FrameTable*> frameTable_;

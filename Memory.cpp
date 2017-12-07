@@ -11,7 +11,7 @@ void Memory::requestMemoryOperation(int PID, int memoryAddress, int pageNumber) 
            << ramMemory_ << endl;
    } else {
       // Check if the pageNumber is already been used but process PID
-      for (int i = 0; i < frameTable_.size(); ++i) {
+      for (unsigned int i = 0; i < frameTable_.size(); ++i) {
          if (frameTable_[i]->PID_ == PID && frameTable_[i]->pageNumber_ == pageNumber) {
             timeStamp_ += 1;
             frameTable_[i]->timeStamp_ = timeStamp_;
@@ -57,7 +57,7 @@ void Memory::updateFrameTable(int PID, int pageNumber) {
 void Memory::replaceWithLRU(int PID, int pageNumber) {
    int rowPos = 0, leastTime_ = frameTable_[0]->timeStamp_;
       // Iterate through the frametable find the LRU process
-      for (int i = 1; i < frameTable_.size(); ++i) {
+      for (unsigned int i = 1; i < frameTable_.size(); ++i) {
          if (frameTable_[i]->timeStamp_ < leastTime_) {
             rowPos = i;
          }
@@ -75,7 +75,7 @@ void Memory::snapshotSystem() {
         << "--------------------------------------------------------\n"
         << "|    FrameNumber" << "    PageNumber" << "    PID" << "    TimeStamp     |\n"
         << "--------------------------------------------------------\n";
-   for (int i = 0; i < frameTable_.size(); ++i) {
+   for (unsigned int i = 0; i < frameTable_.size(); ++i) {
        cout << "|       " << i << "               "
             << frameTable_[i]->pageNumber_ << "          "
             << frameTable_[i]->PID_ << "          "
@@ -90,7 +90,7 @@ void Memory::snapshotSystem() {
 
 void Memory::removeFromFrameTable(int PID) {
    if (frameTable_.size() != 0) {
-      for (int i = 0; i < frameTable_.size(); ++i) {
+      for (unsigned int i = 0; i < frameTable_.size(); ++i) {
          if (frameTable_[i]->PID_ == PID) {
             // frameTable_[i] = nullptr;
             frameTable_[i]->PID_ = -1;
@@ -105,7 +105,7 @@ void Memory::removeFromFrameTable(int PID) {
 
 bool Memory::emptyTableSlot(int& rowPos) {
    cout << "Looking for empty slots in frame table \n";
-   for (int i = 0; i < frameTable_.size(); ++i) {
+   for (unsigned int i = 0; i < frameTable_.size(); ++i) {
       if (frameTable_[i]->PID_ == -1) {
          return true;
       }

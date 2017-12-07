@@ -17,7 +17,7 @@ public:
 
    // Getter
    int getCurrPID() { return currPID_; }
-	unsigned int getRamMemory() { return ramMemory_; }
+	long int getRamMemory() { return ramMemory_; }
 	int getPageSize() { return pageSize_; }
 
    // Functions to
@@ -56,7 +56,7 @@ private:
    // Two integer variables to track the PID and PriorityLevel of current executing process
    int currPID_ = 0, currPriorityLevel_ = 0;
 
-   unsigned int ramMemory_;
+   long int ramMemory_;
    int pageSize_;
 };
 
