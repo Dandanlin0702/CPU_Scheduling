@@ -108,13 +108,17 @@ void StartApp::commandIsA(string userCommand) {
 
 void StartApp::commandIsD(string userCommand) {
    stringstream ss;
-   int diskNumber_;
+   int diskNumber_ = -1;
    char commandType_;
 
    ss << userCommand;
    ss >> commandType_ >> diskNumber_;
 
-   systemManager_.releaseDisk(diskNumber_);
+   if (diskNumber_ == -1) {
+      cout << "ERROR \n Please enter a valid disk number. \n";
+   } else {
+      systemManager_.releaseDisk(diskNumber_);
+   }
 }
 
 void StartApp::commandIsd(string userCommand) {

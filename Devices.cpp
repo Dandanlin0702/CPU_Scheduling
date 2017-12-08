@@ -21,20 +21,19 @@ void Devices::requestDiskAccess(int PID, int priorityLevel, int diskNumber, stri
 
 void Devices::releaseDisk(int diskNumber, int& PID, int& priorityLevel) {
    it = hardDiskQueue_.find(diskNumber);
-
+   
    if (it == hardDiskQueue_.end()) {
       cout << "Oops, there's no processes are using the hard disk " << diskNumber << ". \n";
    } else {
-      // Put process back to either Ready Queue or CPU
-      PID = it->second.front()->PID_;
-      priorityLevel = it->second.front()->priorityLevel_;
-
-      it->second.pop();
-
-      if (!it->second.empty()) {
-         cout << "Released Hard Disk #" << diskNumber << endl;
+      if (it->second.empty()) {
+         cout << "There's no process usig hard disk #" << diskNumber << endl;
       } else {
-         cout << "There's no process waiting to use hard disk #" << diskNumber << endl;
+         cout << "Releasing Hard Disk #" << diskNumber << endl;
+
+         PID = it->second.front()->PID_;
+         priorityLevel = it->second.front()->priorityLevel_;
+
+         it->second.pop();
       }
    }
 }
@@ -47,39 +46,43 @@ void Devices::showProcessInHardDisk() {
    if (hardDiskQueueCopy.size() == 0) {
       cout << "No process is using the Hard Disk ATM. \n";
    } else {
-      cout << "--------------------------------------------------------\n"
-           << "|                      In Hard Disk                    |\n"
-           << "--------------------------------------------------------\n";
-
+//      cout << "--------------------------------------------------------\n"
+//           << "|                      In Hard Disk                    |\n"
+//           << "--------------------------------------------------------\n";
+       cout << "Hard Disk #";
       for (it = hardDiskQueueCopy.begin(); it != hardDiskQueueCopy.end(); ++it) {
          if (it->second.empty()) {
             cout << "No process in using Hard Disk #" << it->first << endl;
          } else {
-            cout << "--------------------------------------------------------\n"
-                 << "|        DiskNumber" << "        Process" << "        File         |\n"
-                 << "--------------------------------------------------------\n";
-            cout << "|            " << it->first << "                "
-                 << it->second.front()->PID_ << "           "
-                 << it->second.front()->fileName_ << "         |\n"
-                 << "--------------------------------------------------------\n";
+             cout << it->first << ": \n\tPID: " << it->second.front()->PID_ << " \n\tFileName: " << it->second.front()->fileName_ << endl;
+             
+//            cout << "--------------------------------------------------------\n"
+//                 << "|        DiskNumber" << "        PID" << "        File         |\n"
+//                 << "--------------------------------------------------------\n";
+//            cout << "|            " << it->first << "                "
+//                 << it->second.front()->PID_ << "           "
+//                 << it->second.front()->fileName_ << "         |\n"
+//                 << "--------------------------------------------------------\n";
 
             it->second.pop();
 
             if (it->second.empty()) {
                cout << "No process is waiting for the Hard Disk # " << it->first << ". \n";
             } else {
-               cout << "--------------------------------------------------------\n"
-                    << "|                      Hard Disk Queue                 |\n"
-                    << "--------------------------------------------------------\n";
+//               cout << "--------------------------------------------------------\n"
+//                    << "|                      Hard Disk Queue                 |\n"
+//                    << "--------------------------------------------------------\n";
+                cout << "Hard Disk Queue #";
                while (!it->second.empty()) {
                   if (it->second.front()->isOccupied_ == true) {
-                  cout << "--------------------------------------------------------\n"
-                       << "|        DiskNumber" << "        Process" << "        File      " << "   |\n"
-                       << "--------------------------------------------------------\n";
-                  cout << "|            " << it->first << "                "
-                       << it->second.front()->PID_ << "           "
-                       << it->second.front()->fileName_ << "        |\n"
-                       << "--------------------------------------------------------\n";
+                      cout << it->first << ": \n\tPID: " << it->second.front()->PID_ << " \n\tFileName: " << it->second.front()->fileName_ << endl;
+//                  cout << "--------------------------------------------------------\n"
+//                       << "|        DiskNumber" << "        PID" << "        File      " << "   |\n"
+//                       << "--------------------------------------------------------\n";
+//                  cout << "|            " << it->first << "                "
+//                       << it->second.front()->PID_ << "           "
+//                       << it->second.front()->fileName_ << "        |\n"
+//                       << "--------------------------------------------------------\n";
                   }
                   it->second.pop();
                }

@@ -27,6 +27,13 @@ void Memory::requestMemoryOperation(int PID, int memoryAddress, int pageNumber) 
 /******************************** Helper Functions ****************************/
 void Memory::updateFrameTable(int PID, int pageNumber) {
    timeStamp_ += 1;
+
+   int frameTableSize = frameTable_.size();
+
+   if (frameTableSize == numOfFrames_) {
+      isTableFull = true;
+   }
+
    if (isTableFull) {
       // When frame table is full
       int rowPos = -1;
@@ -47,10 +54,6 @@ void Memory::updateFrameTable(int PID, int pageNumber) {
       tempFrame->timeStamp_ = timeStamp_;
 
       frameTable_.push_back(tempFrame);
-
-      if (frameTable_.size() == numOfFrames_) {
-         isTableFull = true;
-      }
    }
 }
 
@@ -76,28 +79,24 @@ void Memory::snapshotSystem() {
         << "|    FrameNumber" << "    PageNumber" << "    PID" << "    TimeStamp     |\n"
         << "--------------------------------------------------------\n";
    for (unsigned int i = 0; i < frameTable_.size(); ++i) {
-       cout << "|       " << i << "               "
-            << frameTable_[i]->pageNumber_ << "          "
-            << frameTable_[i]->PID_ << "          "
-            << frameTable_[i]->timeStamp_ << "        |"
-            << endl;
-       cout << "--------------------------------------------------------\n";
+       if (frameTable_[i]->PID_ != -1) {
+         cout << "|       " << i << "               "
+              << frameTable_[i]->pageNumber_ << "          "
+              << frameTable_[i]->PID_ << "          "
+              << frameTable_[i]->timeStamp_ << "        |"
+              << endl;
+         cout << "--------------------------------------------------------\n";
+        }
    }
 }
-
-// void Memory::releaseMemory(int PID) {
-// }
 
 void Memory::removeFromFrameTable(int PID) {
    if (frameTable_.size() != 0) {
       for (unsigned int i = 0; i < frameTable_.size(); ++i) {
          if (frameTable_[i]->PID_ == PID) {
-            // frameTable_[i] = nullptr;
             frameTable_[i]->PID_ = -1;
             frameTable_[i]->pageNumber_ = -1;
             frameTable_[i]->timeStamp_ = -1;
-
-            break;
          }
       }
    }
@@ -106,7 +105,9 @@ void Memory::removeFromFrameTable(int PID) {
 bool Memory::emptyTableSlot(int& rowPos) {
    cout << "Looking for empty slots in frame table \n";
    for (unsigned int i = 0; i < frameTable_.size(); ++i) {
-      if (frameTable_[i]->PID_ == -1) {
+      if (frameTable_[i]->PID_ == -1 || frameTable_[i]->pageNumber_ == -1 || frameTable_[i]->timeStamp_ == -1) {
+         rowPos = i;
+         
          return true;
       }
    }

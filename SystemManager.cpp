@@ -22,7 +22,7 @@ void SystemManager::decideAction(int PID, int priorityLevel) {
 }
 
 void SystemManager::terminateTheCurrentProcess() {
-   cout << "Terminating curr process in CPU with " << currPID_ << " priorityLevel " << currPriorityLevel_ << endl;
+   cout << "Terminating Process: \n\tPID: " << currPID_ << " \n\tPriorityLevel " << currPriorityLevel_ << endl;
 
    CPU_.terminateTheCurrentProcess(currPID_, currPriorityLevel_);
 }
@@ -36,7 +36,7 @@ void SystemManager::showProcessInCPU() {
       cout << "There's no process executing in the CPU right now. \n";
 
    else
-      cout << "CPU: \n Process: " << currPID_ << " Priority Level: " << currPriorityLevel_ << endl;
+      cout << "USING CPU: \n\tPID: " << currPID_ << " \n\tPriorityLevel: " << currPriorityLevel_ << endl;
 
    CPU_.showProcessInReadyQueue();
 }

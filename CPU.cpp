@@ -37,7 +37,7 @@ void CPU::showProcessInReadyQueue() {
             queue<int> tempQueue = it->second;
             while (!tempQueue.empty()) {
                if (it->first != 0 && tempQueue.front() != 0) {
-                  cout << " PID: " << tempQueue.front() << " Priority Level: " << it->first << endl;
+                  cout << "\tPID: " << tempQueue.front() << " \tPriority Level: " << it->first << endl;
                }
                tempQueue.pop();
             }
