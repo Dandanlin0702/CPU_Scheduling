@@ -1,7 +1,6 @@
 #include "CPU.h"
 
 void CPU::terminateTheCurrentProcess(int& currPID, int& currPriorityLevel) {
-   //Memory_.releaseMemory(currPID);
    Memory_.removeFromFrameTable(currPID);
 
    executeNextProcess(currPID, currPriorityLevel);
