@@ -37,7 +37,7 @@ void CPU::showProcessInReadyQueue() {
             queue<int> tempQueue = it->second;
             while (!tempQueue.empty()) {
                if (it->first != 0 && tempQueue.front() != 0) {
-                  cout << "\tPID: " << tempQueue.front() << " \tPriority Level: " << it->first << endl;
+                  cout << "\tPID: " << tempQueue.front() << " \n\tPriority Level: " << it->first << endl;
                }
                tempQueue.pop();
             }
@@ -55,7 +55,7 @@ void CPU::executeNextProcess(int& currPID, int& currPriorityLevel) {
       currPID = -1;
       currPriorityLevel = -1;
 
-      cout << "No process in ready queue right now \n";// << "currPID is " << currPID << " currPriorityLevel is " << currPriorityLevel << endl;
+      cout << "No process in ready queue right now \n";
    } else if (!it->second.empty()){
       currPID = it->second.front();
       currPriorityLevel = it->first;

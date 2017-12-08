@@ -107,7 +107,7 @@ bool Memory::emptyTableSlot(int& rowPos) {
    for (unsigned int i = 0; i < frameTable_.size(); ++i) {
       if (frameTable_[i]->PID_ == -1 || frameTable_[i]->pageNumber_ == -1 || frameTable_[i]->timeStamp_ == -1) {
          rowPos = i;
-         
+
          return true;
       }
    }

@@ -22,7 +22,9 @@ void SystemManager::decideAction(int PID, int priorityLevel) {
 }
 
 void SystemManager::terminateTheCurrentProcess() {
-   cout << "Terminating Process: \n\tPID: " << currPID_ << " \n\tPriorityLevel " << currPriorityLevel_ << endl;
+   if (currPID_ >= 1) {
+      cout << "Terminating Process: \n\tPID: " << currPID_ << " \n\tPriorityLevel " << currPriorityLevel_ << endl;
+   }
 
    CPU_.terminateTheCurrentProcess(currPID_, currPriorityLevel_);
 }

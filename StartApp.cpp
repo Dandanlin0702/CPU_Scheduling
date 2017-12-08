@@ -53,7 +53,7 @@ void StartApp::runApp() {
       switch (userCommand.at(0)) {
          case 'Q':
          case 'q':
-            cout << "Program terminatting .\n";
+            cout << "Thank you for using CPU Simulator.\n";
             exit(0);
             break;
          case 'H':
@@ -79,7 +79,8 @@ void StartApp::runApp() {
             commandIsS(userCommand);
             break;
          default:
-            cout << "Unknown user command (" << userCommand << ") invoked. \n"
+            cout << "Unknown user command (" << userCommand
+                 << ") invoked. \n"
                  << "All commands should be restrictly formatted. Enter \'H\' or \'h\' for help. \n" ;
             break;
       }
