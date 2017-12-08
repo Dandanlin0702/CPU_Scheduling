@@ -96,12 +96,12 @@ void StartApp::commandIsA(string userCommand) {
    char commandType;
    int currPriorityLevel;
 
-   int currPID = systemManager_.assignPID();
-
    ss >> commandType >> currPriorityLevel;
    if (currPriorityLevel < 1) {
       cout << "ERROR \n Please enter a valid priority level. \n";
    } else {
+      int currPID = systemManager_.assignPID();
+
       systemManager_.decideAction(currPID, currPriorityLevel);
       systemManager_.allocateMemoryForProcess(currPID, currPriorityLevel);
    }

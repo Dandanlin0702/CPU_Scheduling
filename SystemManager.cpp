@@ -10,7 +10,6 @@ void SystemManager::setMemoryInfo(unsigned int ramMemory, int pageSize, int numO
 void SystemManager::decideAction(int PID, int priorityLevel) {
    if (currPriorityLevel_ < priorityLevel) {
       // Put current executing process in ReadyQueue then execute new process
-      // cout << "new process coming in current process info:  " << currPID_ << " priorityLevel " << currPriorityLevel_ << endl;
       CPU_.putInReadyQueue(currPID_, currPriorityLevel_);
       // Update current executing process' info
       currPID_ = PID;
@@ -23,10 +22,14 @@ void SystemManager::decideAction(int PID, int priorityLevel) {
 
 void SystemManager::terminateTheCurrentProcess() {
    if (currPID_ >= 1) {
-      cout << "Terminating Process: \n\tPID: " << currPID_ << " \n\tPriorityLevel " << currPriorityLevel_ << endl;
-   }
+      cout << "Terminating Process: \n\tPID: " << currPID_
+           << " \n\tPriorityLevel " << currPriorityLevel_
+           << endl;
 
-   CPU_.terminateTheCurrentProcess(currPID_, currPriorityLevel_);
+      CPU_.terminateTheCurrentProcess(currPID_, currPriorityLevel_);
+   } else {
+      cout << "No process is currently using the CPU \n";
+   }
 }
 
 void SystemManager::putInReadyQueue(int PID, int priorityLevel) {
@@ -44,8 +47,12 @@ void SystemManager::showProcessInCPU() {
 }
 
 void SystemManager::requestDiskAccess(int diskNumber, string fileName) {
-   Devices_.requestDiskAccess(currPID_, currPriorityLevel_, diskNumber, fileName);
-   CPU_.executeNextProcess(currPID_, currPriorityLevel_);
+   if (currPID_ >= 1) {
+      Devices_.requestDiskAccess(currPID_, currPriorityLevel_, diskNumber, fileName);
+      CPU_.executeNextProcess(currPID_, currPriorityLevel_);
+   } else {
+      cout << "Please add a process first \n";
+   }
 }
 
 void SystemManager::releaseDisk(int diskNumber) {
