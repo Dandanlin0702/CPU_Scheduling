@@ -56,7 +56,7 @@ void Devices::showProcessInHardDisk() {
             cout << "No process in using Hard Disk #" << it->first << endl;
          } else {
             cout << "--------------------------------------------------------\n"
-                 << "|        DiskNumber" << "        Process" << "        File         |\n"
+                 << "|        DiskNumber" << "        PID" << "        File         |\n"
                  << "--------------------------------------------------------\n";
             cout << "|            " << it->first << "                "
                  << it->second.front()->PID_ << "           "
@@ -74,7 +74,7 @@ void Devices::showProcessInHardDisk() {
                while (!it->second.empty()) {
                   if (it->second.front()->isOccupied_ == true) {
                   cout << "--------------------------------------------------------\n"
-                       << "|        DiskNumber" << "        Process" << "        File      " << "   |\n"
+                       << "|        DiskNumber" << "        PID" << "        File      " << "   |\n"
                        << "--------------------------------------------------------\n";
                   cout << "|            " << it->first << "                "
                        << it->second.front()->PID_ << "           "
