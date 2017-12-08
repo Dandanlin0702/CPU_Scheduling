@@ -2,7 +2,6 @@
 
 void CPU::terminateTheCurrentProcess(int& currPID, int& currPriorityLevel) {
    Memory_.removeFromFrameTable(currPID);
-
    executeNextProcess(currPID, currPriorityLevel);
 }
 
@@ -38,7 +37,7 @@ void CPU::showProcessInReadyQueue() {
             queue<int> tempQueue = it->second;
             while (!tempQueue.empty()) {
                if (it->first != 0 && tempQueue.front() != 0) {
-                  cout << " Process: " << tempQueue.front() << " Priority Level: " << it->first << endl;
+                  cout << " PID: " << tempQueue.front() << " Priority Level: " << it->first << endl;
                }
                tempQueue.pop();
             }
@@ -56,7 +55,7 @@ void CPU::executeNextProcess(int& currPID, int& currPriorityLevel) {
       currPID = -1;
       currPriorityLevel = -1;
 
-      cout << "No process in ready queue right now \n" << "currPID is " << currPID << " currPriorityLevel is " << currPriorityLevel << endl;
+      cout << "No process in ready queue right now \n";// << "currPID is " << currPID << " currPriorityLevel is " << currPriorityLevel << endl;
    } else if (!it->second.empty()){
       currPID = it->second.front();
       currPriorityLevel = it->first;
