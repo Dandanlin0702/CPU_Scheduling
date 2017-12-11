@@ -38,9 +38,6 @@ private:
 
    unordered_map<int, queue<HardDisk*>>hardDiskQueue_;
    unordered_map<int, queue<HardDisk*>>::iterator it;
-
-   // Show processes are waiting to use the hard disk
-   void showProcessInWaitingQueue(unordered_map<int, queue<HardDisk*>>::iterator it);
 };
 
 #endif

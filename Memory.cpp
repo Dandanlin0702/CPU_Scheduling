@@ -5,10 +5,9 @@ void Memory::allocateMemoryForProcess(int PID, int priorityLevel) {
 }
 
 void Memory::requestMemoryOperation(int PID, int memoryAddress, int pageNumber) {
-   if (memoryAddress > ramMemory_) {
+   if (memoryAddress < 1) {
       cout << "The memory address you entered is not valid \n"
-           << "Please enter a memory address within range: (1~) "
-           << ramMemory_ << endl;
+           << endl;
    } else {
       // Check if the pageNumber is already been used but process PID
       for (unsigned int i = 0; i < frameTable_.size(); ++i) {
@@ -94,7 +93,6 @@ void Memory::removeFromFrameTable(int PID) {
    if (frameTable_.size() != 0) {
       for (unsigned int i = 0; i < frameTable_.size(); ++i) {
          if (frameTable_[i]->PID_ == PID) {
-            // frameTable_[i] = nullptr;
             frameTable_[i]->PID_ = -1;
             frameTable_[i]->pageNumber_ = -1;
             frameTable_[i]->timeStamp_ = -1;
@@ -108,7 +106,7 @@ bool Memory::emptyTableSlot(int& rowPos) {
    for (unsigned int i = 0; i < frameTable_.size(); ++i) {
       if (frameTable_[i]->PID_ == -1 || frameTable_[i]->pageNumber_ == -1 || frameTable_[i]->timeStamp_ == -1) {
          rowPos = i;
-         
+
          return true;
       }
    }

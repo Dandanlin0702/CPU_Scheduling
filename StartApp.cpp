@@ -27,7 +27,7 @@ void StartApp::runApp() {
 
    while (numberOfHardDisks_ < 0) {
       cout << "Youe input is invalid, please enter again\n"
-           << "How many hard disks the simulated computer has?\n >";
+           << "How many hard disks the simulated computer has?\n>";
       cin >> numberOfHardDisks_;
    }
 
@@ -53,7 +53,7 @@ void StartApp::runApp() {
       switch (userCommand.at(0)) {
          case 'Q':
          case 'q':
-            cout << "Program terminatting .\n";
+            cout << "Thank you for using CPU Simulator.\n";
             exit(0);
             break;
          case 'H':
@@ -79,7 +79,8 @@ void StartApp::runApp() {
             commandIsS(userCommand);
             break;
          default:
-            cout << "Unknown user command (" << userCommand << ") invoked. \n"
+            cout << "Unknown user command (" << userCommand
+                 << ") invoked. \n"
                  << "All commands should be restrictly formatted. Enter \'H\' or \'h\' for help. \n" ;
             break;
       }
@@ -95,12 +96,12 @@ void StartApp::commandIsA(string userCommand) {
    char commandType;
    int currPriorityLevel;
 
-   int currPID = systemManager_.assignPID();
-
    ss >> commandType >> currPriorityLevel;
    if (currPriorityLevel < 1) {
       cout << "ERROR \n Please enter a valid priority level. \n";
    } else {
+      int currPID = systemManager_.assignPID();
+
       systemManager_.decideAction(currPID, currPriorityLevel);
       systemManager_.allocateMemoryForProcess(currPID, currPriorityLevel);
    }
@@ -108,13 +109,17 @@ void StartApp::commandIsA(string userCommand) {
 
 void StartApp::commandIsD(string userCommand) {
    stringstream ss;
-   int diskNumber_;
+   int diskNumber_ = -1;
    char commandType_;
 
    ss << userCommand;
    ss >> commandType_ >> diskNumber_;
 
-   systemManager_.releaseDisk(diskNumber_);
+   if (diskNumber_ == -1) {
+      cout << "ERROR \n Please enter a valid disk number. \n";
+   } else {
+      systemManager_.releaseDisk(diskNumber_);
+   }
 }
 
 void StartApp::commandIsd(string userCommand) {
