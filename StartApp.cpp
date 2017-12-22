@@ -17,7 +17,7 @@ void StartApp::runApp() {
    cout << "What is the size of your page/frame? \n> ";
    cin >> pageSize;
 
-   while (pageSize < 0 || pageSize > ramMemory) {
+   while (pageSize < 0) {
       cout << "Youe pagesize is invalid, please enter again\n> ";
       cin >> pageSize;
    }
